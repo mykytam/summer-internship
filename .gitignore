@@ -32,3 +32,4 @@ mvnw.cmd
 
 ### Sensitive Data ###
 src/main/resources/application.properties
+######
