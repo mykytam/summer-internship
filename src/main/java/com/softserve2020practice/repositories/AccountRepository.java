@@ -1,4 +1,4 @@
 package com.softserve2020practice.repositories;
 
-public interface StudentRepository {
+public interface AccountRepository {
 }
