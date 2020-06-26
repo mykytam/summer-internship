@@ -1,6 +1,6 @@
 package com.softserve2020practice.models;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Lesson {
     private long id;
@@ -11,5 +11,5 @@ public class Lesson {
 
     private long themeId;
 
-    private Timestamp lessonDate;
+    private LocalDateTime lessonDate;
 }
