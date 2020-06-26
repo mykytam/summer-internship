@@ -2,10 +2,10 @@ package com.softserve2020practice.models;
 
 public class MentorsOfGroup {
 
-    private long IdMentors;
+    private long idMentors;
 
-    private long IdGroup;
+    private long idGroup;
 
-    private String Comments;
+    private String comments;
 
 }
