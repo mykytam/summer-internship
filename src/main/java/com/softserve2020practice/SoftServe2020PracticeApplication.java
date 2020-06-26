@@ -1,4 +1,4 @@
-package com.softserve2020practice.SoftServe2020Practice;
+package com.softserve2020practice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
