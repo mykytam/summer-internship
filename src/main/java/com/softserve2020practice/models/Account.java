@@ -1,11 +1,15 @@
 package com.softserve2020practice.models;
 
-import java.util.UUID;
+import com.softserve2020practice.models.enums.Role;
 
 public class Account {
 
-    private UUID id;
-
-    private String name;
+    private Long id;
+    private Role role;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String salt;
 
 }
