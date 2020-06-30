@@ -16,4 +16,6 @@ public class Account {
 
     private String salt;
 
+    private boolean active;
+
 }

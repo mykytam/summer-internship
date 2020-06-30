@@ -2,10 +2,10 @@ package com.softserve2020practice.models;
 
 import java.time.LocalDate;
 
-public class Group {
+public class StudentGroup {
 
     private long id;
-    
+
     private long courseId;
 
     private String name;

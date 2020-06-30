@@ -1,8 +1,6 @@
 package com.softserve2020practice.models;
 
-import java.time.LocalDateTime;
-
-public class Lesson {
+public class MentorsOfStudentGroup {
 
     private long id;
 
@@ -10,8 +8,6 @@ public class Lesson {
 
     private long studentGroupId;
 
-    private long themeId;
-
-    private LocalDateTime lessonDate;
+    private String mentorComment;
 
 }
