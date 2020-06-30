@@ -18,6 +18,6 @@ public class Course {
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "Course_id", nullable = false)
     private Course course;
 }
