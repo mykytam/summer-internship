@@ -1,6 +1,8 @@
 package com.softserve2020practice.models;
 
-public class CoursesOfMentor {
+public class MentorOfCourses {
+
+    private long id;
 
     private long idCourse;
 
