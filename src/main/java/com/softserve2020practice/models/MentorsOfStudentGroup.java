@@ -8,6 +8,6 @@ public class MentorsOfStudentGroup {
 
     private long studentGroupId;
 
-    private String mentorComment;
+    private String comment;
 
 }

@@ -12,6 +12,6 @@ public class Visit {
 
     private boolean presence;
 
-    private String studentComment;
+    private String comment;
 
 }
