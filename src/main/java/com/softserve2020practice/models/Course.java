@@ -11,13 +11,13 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "Id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "Name")
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "Course_id", nullable = false)
+    @JoinColumn(name = "IdCourse", nullable = false)
     private Course course;
 }
