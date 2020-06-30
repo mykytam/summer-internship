@@ -17,7 +17,8 @@ public class Visit {
     private long id;
 
     @Column(name = "IdStudent")
-    private long studentId;
+    @ManyToOne
+    private Account student;
 
     @Column(name = "IdLesson")
     @OneToMany
