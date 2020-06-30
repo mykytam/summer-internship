@@ -8,24 +8,33 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "Accounts")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Id")
     private long id;
 
+    @Column(name = "Role")
     private byte role;
 
+    @Column(name = "FirstName")
     private String firstName;
 
+    @Column(name = "LastName")
     private String lastName;
 
+    @Column(name = "Email")
     private String email;
 
+    @Column(name = "Password")
     private String password;
 
+    @Column(name = "Salt")
     private String salt;
 
+    @Column(name = "Active")
     private boolean active;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "StudentsOfGroups")
