@@ -1,17 +1,33 @@
 package com.softserve2020practice.models;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+@Data
+@Entity
+@Table(name = "Lessons")
 public class Lesson {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long mentorId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Accounts", joinColumns = @JoinColumn(name = "Id"))
+    private Set<Account> mentors = new HashSet<>();
 
-    private long studentGroupId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "StudentGroups", joinColumns = @JoinColumn(name = "Id"))
+    private Set<StudentGroup> studentGroups = new HashSet<>();
 
-    private long themeId;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Theme> themes = new HashSet<>();
 
+    @Column(name = "LessonDate")
     private LocalDateTime lessonDate;
 
 }
