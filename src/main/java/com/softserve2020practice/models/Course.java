@@ -19,5 +19,5 @@ public class Course {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "IdCourse", nullable = false)
-    private Course course;
+    private StudentGroup studentGroup;
 }
