@@ -3,6 +3,8 @@ package com.softserve2020practice.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,4 +22,8 @@ public class Course {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "IdCourse", nullable = false)
     private StudentGroup studentGroup;
+
+    @OneToMany
+    @JoinTable(name = "MentorOfCourses")
+    private Set<Account> accounts = new HashSet<>();
 }

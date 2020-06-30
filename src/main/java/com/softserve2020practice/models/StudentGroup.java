@@ -17,7 +17,7 @@ public class StudentGroup {
     @Column(name = "Id")
     private long id;
 
-    @OneToMany(mappedBy = "course") //studentCourse
+    @OneToMany(mappedBy = "studentGroup")
     private Set<Course> courses = new HashSet<>();
 
     @Column(name = "Name")

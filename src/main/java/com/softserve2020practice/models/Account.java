@@ -40,4 +40,8 @@ public class Account {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "StudentsOfGroups")
     private Set<StudentGroup> studentGroupSet = new HashSet<>();
 
+    @OneToMany
+    @JoinTable(name = "MentorOfCourses")
+    private Set<Course> courses = new HashSet<>();
+
 }
