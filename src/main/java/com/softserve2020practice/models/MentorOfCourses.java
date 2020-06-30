@@ -4,9 +4,9 @@ public class MentorOfCourses {
 
     private long id;
 
-    private long idCourse;
+    private long courseId;
 
-    private long idMentor;
+    private long mentorId;
 
     private String mentorComment;
 
