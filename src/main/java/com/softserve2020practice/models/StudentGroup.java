@@ -17,7 +17,7 @@ public class StudentGroup {
     @Column(name = "Id")
     private long id;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course") //studentCourse
     private Set<Course> courses = new HashSet<>();
 
     @Column(name = "Name")
@@ -38,5 +38,9 @@ public class StudentGroup {
             inverseJoinColumns = @JoinColumn(name = "IdStudentGroup")
     )
     private Set<Account> students = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "IdStudentGroup", nullable = false)
+    private Lesson lesson;
 
 }

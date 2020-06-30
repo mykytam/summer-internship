@@ -20,8 +20,7 @@ public class Lesson {
     @JoinTable(name = "Accounts", joinColumns = @JoinColumn(name = "Id"))
     private Set<Account> mentors = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "StudentGroups", joinColumns = @JoinColumn(name = "Id"))
+    @OneToMany(mappedBy = "lesson")
     private Set<StudentGroup> studentGroups = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
