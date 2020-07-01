@@ -17,7 +17,7 @@ import java.util.Set;
 public class StudentGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "Id")
     private long id;
@@ -45,7 +45,7 @@ public class StudentGroup {
             joinColumns = @JoinColumn(name = "IdStudent"),
             inverseJoinColumns = @JoinColumn(name = "IdStudentGroup")
     )
-    private Set<Account> students = new HashSet<>();
+    private Set<Student> students = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "IdStudentGroup", nullable = false)

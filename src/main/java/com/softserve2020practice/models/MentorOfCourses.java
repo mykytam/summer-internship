@@ -22,7 +22,7 @@ public class MentorOfCourses implements Serializable {
     @Id
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "IdMentor")
-    private Account mentorAccount;
+    private Mentor mentorAccount;
 
     @Column(name = "MentorComment")
     private String mentorComment;

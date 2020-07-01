@@ -15,16 +15,20 @@ public class Lesson {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Account> mentors = new HashSet<>();
+    @JoinTable(name = "StudentsOfGroups",
+            joinColumns = @JoinColumn(name = "IdStudent"),
+            inverseJoinColumns = @JoinColumn(name = "IdStudentGroup")
+    )
+    private Set<Mentor> mentors = new HashSet<>();
 
     @OneToMany(mappedBy = "lesson")
     private Set<StudentGroup> studentGroups = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lesson")
     private Set<Theme> themes = new HashSet<>();
 
     @Column(name = "LessonDate")
