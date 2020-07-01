@@ -17,7 +17,7 @@ import java.util.Set;
 public class StudentGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "Id")
     private long id;

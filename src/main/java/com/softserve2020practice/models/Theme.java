@@ -13,14 +13,14 @@ public class Theme {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Column(name = "Name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdTheme", nullable = false)
     private Lesson lesson;
 
