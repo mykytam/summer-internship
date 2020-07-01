@@ -44,4 +44,7 @@ public class Account {
     @JoinTable(name = "MentorOfCourses")
     private Set<Course> courses = new HashSet<>();
 
+    @OneToMany(mappedBy = "mentor")
+    private Set<MentorsOfStudentGroup> mentors = new HashSet<>();
+
 }

@@ -43,4 +43,7 @@ public class StudentGroup {
     @JoinColumn(name = "IdStudentGroup", nullable = false)
     private Lesson lesson;
 
+    @OneToMany(mappedBy = "studentGroup")
+    private Set<MentorsOfStudentGroup> studentGroups = new HashSet<>();
+
 }
