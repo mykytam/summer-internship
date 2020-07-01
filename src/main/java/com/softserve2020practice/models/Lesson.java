@@ -19,7 +19,6 @@ public class Lesson {
     private long id;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "Accounts", joinColumns = @JoinColumn(name = "Id"))
     private Set<Account> mentors = new HashSet<>();
 
     @OneToMany(mappedBy = "lesson")

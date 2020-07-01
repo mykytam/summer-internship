@@ -1,7 +1,7 @@
 package com.softserve2020practice.repositories;
 
 import com.softserve2020practice.models.StudentGroup;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StudentGroupRepository extends CrudRepository<StudentGroup, Long> {
+public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long> {
 }

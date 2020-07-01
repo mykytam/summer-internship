@@ -17,11 +17,9 @@ public class Visit {
     @Column(name = "Id")
     private long id;
 
-    @Column(name = "IdStudent")
     @ManyToOne
     private Account student;
 
-    @Column(name = "IdLesson")
     @ManyToOne
     private Lesson lessons;
 

@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -46,14 +47,26 @@ public class Account {
     @Column(name = "Active")
     private boolean active;
 
-    @OneToMany(mappedBy = "mentorAccount")
-    private Set<MentorOfCourses> studentGroupSet = new HashSet<>();
+    @OneToMany(
+            mappedBy = "mentorAccount",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @EqualsAndHashCode.Exclude
+    private Set<MentorOfCourses> courses = new HashSet<>();
 
-    @OneToMany
-    @JoinTable(name = "MentorOfCourses")
-    private Set<Course> courses = new HashSet<>();
+    @OneToMany(
+            mappedBy = "mentorAccount",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @EqualsAndHashCode.Exclude
+    private Set<MentorsOfStudentGroup> groups = new HashSet<>();
 
-    @OneToMany(mappedBy = "mentor")
-    private Set<MentorsOfStudentGroup> mentors = new HashSet<>();
+    public void addCourse(Course course, String comment) {
+        MentorOfCourses mentorCourses = new MentorOfCourses(course, this, comment);
+        courses.add(mentorCourses);
+        course.getMentors().add(mentorCourses);
+    }
 
 }
