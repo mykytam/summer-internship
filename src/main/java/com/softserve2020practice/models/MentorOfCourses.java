@@ -3,22 +3,25 @@ package com.softserve2020practice.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "MentorsOfCourses")
-public class MentorOfCourses {
+public class MentorOfCourses implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id")
-    private long id;
+    @EmbeddedId
+    private MentorOfCoursesPK id;
 
-    @Column(name = "IdCourse")
-    private long courseId;
+    @ManyToOne
+    @MapsId("courseId")
+    @JoinColumn(name = "IdCourse")
+    private Course course;
 
-    @Column(name = "IdMentor")
-    private long mentorId;
+    @ManyToOne
+    @MapsId("mentorId")
+    @JoinColumn(name = "IdMentor")
+    private Account mentorAccount;
 
     @Column(name = "MentorComment")
     private String mentorComment;

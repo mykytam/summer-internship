@@ -46,4 +46,7 @@ public class StudentGroup {
     @OneToMany(mappedBy = "studentGroup")
     private Set<MentorsOfStudentGroup> studentGroups = new HashSet<>();
 
+    @OneToMany(mappedBy = "course")
+    private Set<MentorOfCourses> studentGroupSet = new HashSet<>();
+
 }

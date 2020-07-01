@@ -3,8 +3,6 @@ package com.softserve2020practice.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -21,8 +19,8 @@ public class Visit {
     private Account student;
 
     @Column(name = "IdLesson")
-    @OneToMany
-    private Set<Lesson> lessons = new HashSet<>();
+    @ManyToOne
+    private Lesson lessons;
 
     @Column(name = "StudentMark")
     private byte studentMark;

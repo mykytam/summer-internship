@@ -37,8 +37,8 @@ public class Account {
     @Column(name = "Active")
     private boolean active;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "StudentsOfGroups")
-    private Set<StudentGroup> studentGroupSet = new HashSet<>();
+    @OneToMany(mappedBy = "mentorAccount")
+    private Set<MentorOfCourses> studentGroupSet = new HashSet<>();
 
     @OneToMany
     @JoinTable(name = "MentorOfCourses")
