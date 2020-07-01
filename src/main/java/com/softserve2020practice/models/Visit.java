@@ -3,6 +3,8 @@ package com.softserve2020practice.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -11,6 +13,7 @@ public class Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     @Column(name = "Id")
     private long id;
 
@@ -20,12 +23,14 @@ public class Visit {
     @ManyToOne
     private Lesson lessons;
 
+    @NotNull
     @Column(name = "StudentMark")
     private byte studentMark;
 
     @Column(name = "Presence")
     private boolean presence;
 
+    @NotBlank
     @Column(name = "Comments")
     private String comment;
 

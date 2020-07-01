@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,9 +16,11 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     @Column(name = "Id")
     private Long id;
 
+    @NotBlank
     @Column(name = "Name")
     private String name;
 
