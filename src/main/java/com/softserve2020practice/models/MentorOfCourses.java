@@ -1,6 +1,8 @@
 package com.softserve2020practice.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,22 +10,20 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "MentorsOfCourses")
+@NoArgsConstructor
+@AllArgsConstructor
 public class MentorOfCourses implements Serializable {
 
-    @EmbeddedId
-    private MentorOfCoursesPK id;
-
-    @ManyToOne
-    @MapsId("courseId")
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "IdCourse")
     private Course course;
 
-    @ManyToOne
-    @MapsId("mentorId")
+    @Id
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "IdMentor")
     private Account mentorAccount;
 
     @Column(name = "MentorComment")
     private String mentorComment;
-
 }
