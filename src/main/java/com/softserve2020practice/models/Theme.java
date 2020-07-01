@@ -3,6 +3,8 @@ package com.softserve2020practice.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -10,9 +12,11 @@ import javax.persistence.*;
 public class Theme {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     @Column(name = "Name")
     private String name;
 

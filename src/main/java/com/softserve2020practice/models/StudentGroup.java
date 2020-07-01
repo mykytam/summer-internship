@@ -3,6 +3,9 @@ package com.softserve2020practice.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,18 +17,22 @@ public class StudentGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     @Column(name = "Id")
     private long id;
 
     @OneToMany(mappedBy = "studentGroup")
     private Set<Course> courses = new HashSet<>();
 
+    @NotBlank
     @Column(name = "Name")
     private String name;
 
+    @NotEmpty
     @Column(name = "StartDate")
     private LocalDate startDate;
 
+    @NotEmpty
     @Column(name = "FinishDate")
     private LocalDate finishDate;
 
