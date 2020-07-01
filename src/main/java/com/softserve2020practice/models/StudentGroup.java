@@ -45,7 +45,7 @@ public class StudentGroup {
             joinColumns = @JoinColumn(name = "IdStudent"),
             inverseJoinColumns = @JoinColumn(name = "IdStudentGroup")
     )
-    private Set<Account> students = new HashSet<>();
+    private Set<Student> students = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "IdStudentGroup", nullable = false)

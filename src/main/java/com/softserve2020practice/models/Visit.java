@@ -18,7 +18,7 @@ public class Visit {
     private long id;
 
     @ManyToOne
-    private Account student;
+    private Student student;
 
     @ManyToOne
     private Lesson lessons;

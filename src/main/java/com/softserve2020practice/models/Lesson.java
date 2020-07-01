@@ -19,7 +19,7 @@ public class Lesson {
     private long id;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<Account> mentors = new HashSet<>();
+    private Set<Mentor> mentors = new HashSet<>();
 
     @OneToMany(mappedBy = "lesson")
     private Set<StudentGroup> studentGroups = new HashSet<>();
