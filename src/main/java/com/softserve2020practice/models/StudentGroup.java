@@ -1,7 +1,9 @@
 package com.softserve2020practice.models;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,6 +15,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
 @Table(name = "StudentGroups")
 public class StudentGroup {
 
