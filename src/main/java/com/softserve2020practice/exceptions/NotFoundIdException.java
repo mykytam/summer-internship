@@ -1,4 +1,4 @@
-package com.softserve2020practice.exeptions;
+package com.softserve2020practice.exceptions;
 
 public class NotFoundIdException extends RuntimeException {
     public NotFoundIdException() {
