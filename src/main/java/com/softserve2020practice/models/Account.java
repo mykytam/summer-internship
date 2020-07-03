@@ -1,26 +1,38 @@
 package com.softserve2020practice.models;
 
+import com.softserve2020practice.models.enums.Role;
 import lombok.Data;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
 @Table(name = "Accounts")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.INTEGER)
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "Id")
-    private long id;
+    private Long id;
 
-    @Column(name = "Role", insertable = false, updatable = false)
-    private byte role;
+    //    @Enumerated
+    @Column(name = "Role")
+    @Type(type = "com.softserve2020practice.models.enums.EnumRole",
+            parameters = {
+                    @Parameter(name = "enumClassName", value = "com.softserve2020practice.models.enums.Role"),
+                    @Parameter(name = "recreateEnumMthd", value = "recreateEnum"),
+                    @Parameter(name = "recreateStringMthd", value = "recreateString")
+            }
+    )
+    private Role role;
 
     @NotBlank
     @Column(name = "FirstName")

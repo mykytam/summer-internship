@@ -1,19 +1,25 @@
 package com.softserve2020practice.models;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.softserve2020practice.models.enums.Role.Constants.MENTOR_VALUE;
-
+@Data
 @Entity
-@DiscriminatorValue(MENTOR_VALUE)
+@Table(name = "Mentor")
 public class Mentor extends Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "IdAccount")
+    private Account idAccount;
 
     @OneToMany(
             mappedBy = "mentorAccount",
