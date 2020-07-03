@@ -22,14 +22,18 @@ public enum Role {
     public static Role recreateEnum(String value) {
         Role enumVal = null;
         if (value != null) {
-            if (value.equalsIgnoreCase("1"))
+            if (value.equalsIgnoreCase(Constants.STUDENT_VALUE))
                 enumVal = Role.STUDENT;
-            else if (value.equalsIgnoreCase("2"))
+            else if (value.equalsIgnoreCase(Constants.MENTOR_VALUE))
                 enumVal = Role.MENTOR;
-            else if (value.equalsIgnoreCase("4"))
+            else if (value.equalsIgnoreCase(Constants.ADMIN_VALUE))
                 enumVal = Role.ADMIN;
         }
         return enumVal;
+    }
+
+    public String recreateString() {
+        return value;
     }
 
     public static class Constants {

@@ -1,5 +1,6 @@
 package com.softserve2020practice.models.enums;
 
+import lombok.SneakyThrows;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.ParameterizedType;
@@ -7,7 +8,6 @@ import org.hibernate.usertype.UserType;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +24,7 @@ public class EnumRole implements UserType, ParameterizedType {
     private Class enumClass;
 
     @Override
+    @SneakyThrows
     public void setParameterValues(Properties properties) {
 
         if (properties != null) {
@@ -32,18 +33,10 @@ public class EnumRole implements UserType, ParameterizedType {
             String className = properties.getProperty("enumClassName");
             Class<?> returnType = null;
 
-            try {
-                enumClass = Class.forName(className);
-                recreateStringMthd = enumClass.getMethod(strMthd, new Class[]{});
-                returnType = recreateStringMthd.getReturnType();
-                recreateEnumMthd = enumClass.getMethod(enumMthd, new Class[]{returnType});
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            enumClass = Class.forName(className);
+            recreateStringMthd = enumClass.getMethod(strMthd, new Class[]{});
+            returnType = recreateStringMthd.getReturnType();
+            recreateEnumMthd = enumClass.getMethod(enumMthd, new Class[]{returnType});
         }
     }
 
@@ -69,6 +62,7 @@ public class EnumRole implements UserType, ParameterizedType {
     }
 
     @Override
+    @SneakyThrows
     public Object nullSafeGet(ResultSet rs, String[] names, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
         String value = rs.getString(names[0]);
         Object returnVal = null;
@@ -76,37 +70,22 @@ public class EnumRole implements UserType, ParameterizedType {
         if (value == null)
             return null;
         else {
-            try {
-                returnVal = recreateEnumMthd.invoke(enumClass, new Object[]{value});
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            returnVal = recreateEnumMthd.invoke(enumClass, new Object[]{value});
         }
         //return (GenderEnum)returnVal;
         return returnVal;
     }
 
     @Override
+    @SneakyThrows
     public void nullSafeSet(PreparedStatement st, Object o, int index, SharedSessionContractImplementor sharedSessionContractImplementor) throws HibernateException, SQLException {
         String prepStmtVal = null;
 
         if (o == null) {
             st.setObject(index, null);
         } else {
-            try {
-                prepStmtVal = (String) recreateStringMthd.invoke(o, new Object[]{});
-                st.setString(index, prepStmtVal);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            prepStmtVal = (String) recreateStringMthd.invoke(o, new Object[]{});
+            st.setString(index, prepStmtVal);
         }
     }
 
