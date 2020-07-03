@@ -30,13 +30,13 @@ public class CourseController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "{id}")
     public ResponseEntity updateCourse(@Valid @RequestBody CourseUpdateDto courseUpdateDto) {
         courseService.updateCourse(courseUpdateDto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "{id}")
     public ResponseEntity deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
         return new ResponseEntity(HttpStatus.OK);
