@@ -13,14 +13,15 @@ public class Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "Id")
-    private long id;
+    private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "IdStudent")
     private Student student;
 
     @ManyToOne
+    @JoinColumn(name = "IdLesson")
     private Lesson lessons;
 
     @NotNull

@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -12,7 +11,6 @@ import javax.validation.constraints.NotNull;
 public class Theme {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
