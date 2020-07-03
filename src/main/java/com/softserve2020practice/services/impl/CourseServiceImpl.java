@@ -2,8 +2,8 @@ package com.softserve2020practice.services.impl;
 
 import com.softserve2020practice.dto.CourseCreateDto;
 import com.softserve2020practice.dto.CourseUpdateDto;
-import com.softserve2020practice.exeptions.AlreadyExistException;
-import com.softserve2020practice.exeptions.NotFoundIdException;
+import com.softserve2020practice.exceptions.AlreadyExistException;
+import com.softserve2020practice.exceptions.NotFoundIdException;
 import com.softserve2020practice.models.Course;
 import com.softserve2020practice.repositories.CourseRepository;
 import com.softserve2020practice.services.CourseService;
