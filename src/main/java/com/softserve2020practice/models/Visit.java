@@ -8,31 +8,31 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@Table(name = "Visits")
+@Table(name = "visit")
 public class Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "IdStudent")
+    @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "IdLesson")
-    private Lesson lessons;
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 
     @NotNull
-    @Column(name = "StudentMark")
+    @Column(name = "student_mark")
     private byte studentMark;
 
-    @Column(name = "Presence")
+    @Column(name = "presence")
     private boolean presence;
 
     @NotBlank
-    @Column(name = "Comments")
+    @Column(name = "comment")
     private String comment;
 
 }

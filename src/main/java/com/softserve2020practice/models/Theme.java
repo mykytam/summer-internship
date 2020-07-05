@@ -4,22 +4,23 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Themes")
+@Table(name = "theme")
 public class Theme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NotBlank
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "IdTheme", nullable = false)
-    private Lesson lesson;
+    @OneToMany(mappedBy = "theme")
+    private Set<Lesson> lesson;
 
 }

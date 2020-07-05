@@ -33,14 +33,14 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         studentGroup.setName(studentGroupRequestDto.getName());
         studentGroup.setStartDate(studentGroupRequestDto.getStartDate());
         studentGroup.setFinishDate(studentGroupRequestDto.getFinishDate());
-        studentGroup.setCourses(studentGroupRequestDto.getCourses());
+        // studentGroup.setCourses(studentGroupRequestDto.getCourses());
 
         Set<String> emails = studentGroupRequestDto.getEmails();
         Set<Student> students = new HashSet<>();
 
-        for (String email : emails) {
-            students.add(studentRepository.findByEmail(email));
-        }
+//        for (String email : emails) {
+//            students.add(studentRepository.findByEmail(email));
+//        }
 
         studentGroup.setStudents(students);
 
@@ -73,14 +73,14 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         studentGroup.setName(studentGroupRequestDto.getName());
         studentGroup.setStartDate(studentGroupRequestDto.getStartDate());
         studentGroup.setFinishDate(studentGroupRequestDto.getFinishDate());
-        studentGroup.setCourses(studentGroupRequestDto.getCourses());
+        //  studentGroup.setCourses(studentGroupRequestDto.getCourses());
 
         Set<String> emails = studentGroupRequestDto.getEmails();
         Set<Student> students = new HashSet<>();
 
-        for (String email : emails) {
-            students.add(studentRepository.findByEmail(email));
-        }
+//        for (String email : emails) {
+//            students.add(studentRepository.findByEmail(email));
+//        }
 
         studentGroup.setStudents(students);
 

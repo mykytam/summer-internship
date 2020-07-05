@@ -9,27 +9,30 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Lessons")
+@Table(name = "lesson")
 public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "StudentsOfGroups",
-            joinColumns = @JoinColumn(name = "IdStudent"),
-            inverseJoinColumns = @JoinColumn(name = "IdStudentGroup")
-    )
-    private Set<Mentor> mentors = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "mentor_id", nullable = false)
+    private Mentor mentor;
 
-    @OneToMany(mappedBy = "lesson")
-    private Set<StudentGroup> studentGroups = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "student_group_id", nullable = false)
+    private StudentGroup studentGroup;
 
-    @OneToMany(mappedBy = "lesson")
-    private Set<Theme> themes = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "theme_id", nullable = false)
+    private Theme theme;
 
-    @Column(name = "LessonDate")
+    @Column(name = "lesson_date")
     private LocalDateTime lessonDate;
+
+    @OneToMany(mappedBy = "lesson")
+    private Set<Visit> visits = new HashSet<>();
 
 }
