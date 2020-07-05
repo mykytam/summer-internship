@@ -1,7 +1,6 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,37 +8,25 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Mentor")
-public class Mentor extends Account {
+@Table(name = "mentor")
+public class Mentor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "IdAccount")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "account_id")
     private Account idAccount;
 
-    @OneToMany(
-            mappedBy = "mentorAccount",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @EqualsAndHashCode.Exclude
-    private Set<MentorOfCourses> courses = new HashSet<>();
+    @ManyToMany(mappedBy = "mentors")
+    private Set<Course> courses = new HashSet<>();
 
-    @OneToMany(
-            mappedBy = "mentorAccount",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @EqualsAndHashCode.Exclude
-    private Set<MentorsOfStudentGroup> groups = new HashSet<>();
+    @ManyToMany(mappedBy = "mentors")
+    private Set<StudentGroup> groups = new HashSet<>();
 
-    public void addCourse(Course course, String comment) {
-        MentorOfCourses mentorCourses = new MentorOfCourses(course, this, comment);
-        courses.add(mentorCourses);
-        course.getMentors().add(mentorCourses);
-    }
+    @OneToMany(mappedBy = "mentor")
+    private Set<Lesson> lessons;
+
 }

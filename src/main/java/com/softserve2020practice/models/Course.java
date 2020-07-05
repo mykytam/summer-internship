@@ -1,7 +1,6 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,28 +9,25 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Courses")
+@Table(name = "course")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
     @NotBlank
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "IdCourse", nullable = false)
-    private StudentGroup studentGroup;
+    @OneToMany(mappedBy = "course")
+    private Set<StudentGroup> studentGroups;
 
-
-    @OneToMany(
-            mappedBy = "course",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "mentor_of_course",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "mentor_id")
     )
-    @EqualsAndHashCode.Exclude
-    private Set<MentorOfCourses> mentors = new HashSet<>();
+    private Set<Mentor> mentors = new HashSet<>();
 }

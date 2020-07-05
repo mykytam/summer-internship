@@ -7,22 +7,19 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "Student")
-public class Student extends Account {
+@Table(name = "student")
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "IdAccount")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "account_id")
     private Account idAccount;
 
-    @ManyToMany
-    @JoinTable(name = "StudentsOfGroups",
-            joinColumns = @JoinColumn(name = "IdStudent"),
-            inverseJoinColumns = @JoinColumn(name = "Id"))
+    @ManyToMany(mappedBy = "students")
     private List<StudentGroup> groupStudents;
 
     @OneToMany(mappedBy = "student")

@@ -1,7 +1,6 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,49 +11,45 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "StudentGroups")
+@Table(name = "student_group")
 public class StudentGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy = "studentGroup")
-    private Set<Course> courses = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
     @NotBlank
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
 
     @NotEmpty
-    @Column(name = "StartDate")
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     @NotEmpty
-    @Column(name = "FinishDate")
+    @Column(name = "finish_date")
     private LocalDate finishDate;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "StudentsOfGroups",
-            joinColumns = @JoinColumn(name = "IdStudent"),
-            inverseJoinColumns = @JoinColumn(name = "IdStudentGroup")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "student_of_student_group",
+            joinColumns = @JoinColumn(name = "student_group_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private Set<Student> students = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "IdStudentGroup", nullable = false)
-    private Lesson lesson;
+    @OneToMany(mappedBy = "studentGroup")
+    private Set<Lesson> lessons;
 
-    @OneToMany(
-            mappedBy = "studentGroup",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "mentor_of_student_group",
+            joinColumns = @JoinColumn(name = "student_group_id"),
+            inverseJoinColumns = @JoinColumn(name = "mentor_id")
     )
-    @EqualsAndHashCode.Exclude
-    private Set<MentorsOfStudentGroup> mentors = new HashSet<>();
+    private Set<Mentor> mentors = new HashSet<>();
 
 }

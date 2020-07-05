@@ -5,42 +5,49 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Accounts")
+@Table(name = "account")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "Role")
+    @Column(name = "role")
     @Convert(converter = RoleConverter.class)
     private Role role;
 
     @NotBlank
-    @Column(name = "FirstName")
+    @Column(name = "first_name")
     private String firstName;
 
     @NotBlank
-    @Column(name = "LastName")
+    @Column(name = "last_name")
     private String lastName;
 
     @NotBlank
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
     @NotBlank
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
     @NotBlank
-    @Column(name = "Salt")
+    @Column(name = "salt")
     private String salt;
 
-    @Column(name = "Active")
+    @Column(name = "is_active")
     private boolean active;
+
+    @OneToMany(mappedBy = "idAccount")
+    private Set<Mentor> mentors;
+
+    @OneToMany(mappedBy = "idAccount")
+    private Set<Student> students;
 
 }
