@@ -1,23 +1,24 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "student")
+@NoArgsConstructor
+@PrimaryKeyJoinColumn(name = "account_id")
 public class Student extends Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "account_id")
-    private Account idAccount;
 
     @ManyToMany(mappedBy = "students")
     private List<StudentGroup> groupStudents;

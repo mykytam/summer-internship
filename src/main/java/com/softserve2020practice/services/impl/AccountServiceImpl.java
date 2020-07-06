@@ -4,9 +4,11 @@ import com.softserve2020practice.models.Account;
 import com.softserve2020practice.repositories.AccountRepository;
 import com.softserve2020practice.services.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
