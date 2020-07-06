@@ -3,7 +3,9 @@ package com.softserve2020practice.converters;
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.models.StudentGroup;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StudentGroupRequestDtoToStudentGroup implements Converter<StudentGroupRequestDto, StudentGroup> {
 
     @Override

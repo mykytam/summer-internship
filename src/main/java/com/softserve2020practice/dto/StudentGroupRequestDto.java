@@ -18,10 +18,10 @@ public class StudentGroupRequestDto {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private LocalDate startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDate finishDate;
 
     @NotNull

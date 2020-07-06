@@ -27,10 +27,10 @@ public class StudentGroupResponseDto {
     @NotNull
     private Set<Account> students;
 
-    @NotBlank
+    @NotNull
     private LocalDate startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDate finishDate;
 
 }

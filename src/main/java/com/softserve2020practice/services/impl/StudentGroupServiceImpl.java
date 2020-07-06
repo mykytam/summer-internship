@@ -1,5 +1,6 @@
 package com.softserve2020practice.services.impl;
 
+import com.softserve2020practice.converters.StudentGroupRequestDtoToStudentGroup;
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
 import com.softserve2020practice.exceptions.CourseNotFoundException;
@@ -22,6 +23,7 @@ import java.util.List;
 public class StudentGroupServiceImpl implements StudentGroupService {
 
     private final ConversionService conversionService;
+    private final StudentGroupRequestDtoToStudentGroup studentGroupRequestDtoToStudentGroup;
     private final StudentGroupRepository studentGroupRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
@@ -29,7 +31,9 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Override
     public StudentGroupResponseDto createStudentGroup(StudentGroupRequestDto studentGroupRequestDto) {
 
-        StudentGroup studentGroup = conversionService.convert(studentGroupRequestDto, StudentGroup.class);
+        StudentGroup studentGroup =
+                studentGroupRequestDtoToStudentGroup.convert(studentGroupRequestDto);
+
         Course course = courseRepository.findById(studentGroupRequestDto.getCourseId())
                 .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
 
