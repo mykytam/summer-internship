@@ -3,6 +3,8 @@ package com.softserve2020practice.models;
 import com.softserve2020practice.converters.RoleConverter;
 import com.softserve2020practice.models.enums.Role;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,7 +12,10 @@ import java.util.Set;
 
 @Data
 @Entity
+@SuperBuilder
 @Table(name = "account")
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Account {
 
     @Id
@@ -45,7 +50,7 @@ public class Account {
     @Column(name = "is_active")
     private boolean active;
 
-    @OneToMany(mappedBy = "idAccount")
+    @OneToMany(mappedBy = "account")
     private Set<Mentor> mentors;
 
     @OneToMany(mappedBy = "idAccount")

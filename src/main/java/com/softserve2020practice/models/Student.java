@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student extends Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
