@@ -1,12 +1,13 @@
 package com.softserve2020practice.dto;
 
-import com.softserve2020practice.models.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 
 @Data
@@ -14,14 +15,19 @@ import java.util.Set;
 @AllArgsConstructor
 public class StudentGroupRequestDto {
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private LocalDate startDate;
 
+    @NotBlank
     private LocalDate finishDate;
 
-    private Set<Course> courses;
+    @NotNull
+    private Long courseId;
 
-    private Set<String> emails;
+    @NotNull
+    private List<Long> studentId;
 
 }

@@ -2,6 +2,7 @@ package com.softserve2020practice.controllers;
 
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
+import com.softserve2020practice.models.StudentGroup;
 import com.softserve2020practice.services.StudentGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("/api/group")
+@RequestMapping("/api/groups")
 @RestController
 @RequiredArgsConstructor
 public class StudentGroupController {
@@ -19,13 +20,13 @@ public class StudentGroupController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StudentGroupResponseDto createStudentGroup(@RequestBody @Valid StudentGroupRequestDto studentGroup) {
-        return studentGroupService.createStudentGroup(studentGroup);
+    public void createStudentGroup(@RequestBody @Valid StudentGroupRequestDto studentGroup) {
+        studentGroupService.createStudentGroup(studentGroup);
     }
 
     @GetMapping
-    public List<StudentGroupResponseDto> findStudentGroup() {
-        return studentGroupService.findStudentGroup();
+    public List<StudentGroup> findStudentGroup() {
+        return studentGroupService.findAllStudentGroups();
     }
 
     @GetMapping("{id}")
@@ -34,8 +35,8 @@ public class StudentGroupController {
     }
 
     @PutMapping("{id}")
-    public StudentGroupResponseDto updateStudentGroup(StudentGroupRequestDto studentGroupRequestDto, @PathVariable Long id) {
-        return studentGroupService.updateStudentGroup(studentGroupRequestDto, id);
+    public void updateStudentGroup(StudentGroupRequestDto studentGroupRequestDto, @PathVariable Long id) {
+        studentGroupService.updateStudentGroup(studentGroupRequestDto, id);
     }
 
     @DeleteMapping("{id}")
