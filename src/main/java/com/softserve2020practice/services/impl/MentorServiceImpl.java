@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.softserve2020practice.services.PasswordGenerator.generatePassword;
-import static com.softserve2020practice.services.PasswordGenerator.generateSalt;
+import static com.softserve2020practice.services.PasswordGenerator.*;
 
 @Service
 @RequiredArgsConstructor
@@ -58,13 +57,14 @@ public class MentorServiceImpl implements MentorService {
 
         List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourses());
         for (Course toAdd : coursesFromDto) {
+            toUpdate.deleteForUpdate();
             toUpdate.addCourse(toAdd);
         }
 
         account.setEmail(mentorDto.getEmail());
         account.setFirstName(mentorDto.getFirstName());
         account.setLastName(mentorDto.getLastName());
-        account.setPassword(mentorDto.getEmail());
+        account.setPassword(updatePassword(mentorDto.getEmail()));
 
         mentorRepository.save(toUpdate);
     }

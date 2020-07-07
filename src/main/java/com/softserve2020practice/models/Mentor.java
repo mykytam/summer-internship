@@ -49,4 +49,8 @@ public class Mentor {
         course.getMentors().add(this);
     }
 
+    public void deleteForUpdate() {
+        courses.clear();
+    }
+
 }

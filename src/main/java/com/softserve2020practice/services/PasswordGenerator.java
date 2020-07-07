@@ -19,4 +19,10 @@ public class PasswordGenerator {
                 .hashString(generateSalt(), StandardCharsets.UTF_8)
                 .toString();
     }
+
+    public static String updatePassword(String newPass) {
+        return Hashing.sha256()
+                .hashString(newPass.concat(generateSalt()), StandardCharsets.UTF_8)
+                .toString();
+    }
 }
