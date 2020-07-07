@@ -48,10 +48,6 @@ public class Account {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
     @JsonIgnore
     @OneToMany(mappedBy = "idAccount")
     private Set<Student> students;

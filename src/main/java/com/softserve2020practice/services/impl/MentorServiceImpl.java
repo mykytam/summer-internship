@@ -1,6 +1,7 @@
 package com.softserve2020practice.services.impl;
 
 import com.softserve2020practice.dto.MentorCreateDto;
+import com.softserve2020practice.dto.MentorResponseDto;
 import com.softserve2020practice.dto.MentorUpdateDto;
 import com.softserve2020practice.models.Account;
 import com.softserve2020practice.models.Course;
@@ -14,6 +15,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.softserve2020practice.services.PasswordGenerator.*;
 
@@ -26,8 +28,10 @@ public class MentorServiceImpl implements MentorService {
     private final CourseRepository courseRepository;
 
     @Override
-    public List<Mentor> getAllMentors() {
-        return mentorRepository.findAll();
+    public List<MentorResponseDto> getAllMentors() {
+        return mentorRepository.findAll().stream()
+                .map(mentors -> conversionService.convert(mentors, MentorResponseDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -71,9 +75,11 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public void deleteMentor(Long id) {
+
         Mentor toDeactivate = mentorRepository.findById(id).orElseThrow(RuntimeException::new);
         Account account = toDeactivate.getIdAccount();
         account.setActive(false);
+
         mentorRepository.save(toDeactivate);
     }
 }

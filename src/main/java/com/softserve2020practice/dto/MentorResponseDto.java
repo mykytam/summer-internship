@@ -4,11 +4,17 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
-public class MentorCreateDto {
+public class MentorResponseDto {
+
+    @NotNull
+    private Long id;
+
+    @NotNull
+    private Long idAccount;
 
     @NotBlank
     private String email;
@@ -19,6 +25,7 @@ public class MentorCreateDto {
     @NotBlank
     private String lastName;
 
-    private Set<Long> courses;
+    @NotBlank
+    private Boolean isActive;
 
 }
