@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.softserve2020practice.converters.RoleConverter;
 import com.softserve2020practice.models.enums.Role;
 import lombok.Data;
 
