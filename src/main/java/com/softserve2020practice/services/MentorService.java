@@ -1,14 +1,14 @@
 package com.softserve2020practice.services;
 
 import com.softserve2020practice.dto.MentorCreateDto;
+import com.softserve2020practice.dto.MentorResponseDto;
 import com.softserve2020practice.dto.MentorUpdateDto;
-import com.softserve2020practice.models.Mentor;
 
 import java.util.List;
 
 public interface MentorService {
 
-    List<Mentor> getAllMentors();
+    List<MentorResponseDto> getAllMentors();
 
     void addMentor(MentorCreateDto mentorDto);
 

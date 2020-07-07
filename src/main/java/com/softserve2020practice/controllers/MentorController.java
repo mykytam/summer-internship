@@ -1,8 +1,8 @@
 package com.softserve2020practice.controllers;
 
 import com.softserve2020practice.dto.MentorCreateDto;
+import com.softserve2020practice.dto.MentorResponseDto;
 import com.softserve2020practice.dto.MentorUpdateDto;
-import com.softserve2020practice.models.Mentor;
 import com.softserve2020practice.services.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class MentorController {
     private final MentorService mentorService;
 
     @GetMapping
-    public List<Mentor> getAllMentors() {
+    public List<MentorResponseDto> getAllMentors() {
         return mentorService.getAllMentors();
     }
 
