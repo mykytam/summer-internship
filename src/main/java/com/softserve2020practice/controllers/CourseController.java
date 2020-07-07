@@ -1,12 +1,10 @@
 package com.softserve2020practice.controllers;
 
 import com.softserve2020practice.dto.CourseCreateDto;
-import com.softserve2020practice.dto.CourseUpdateDto;
-import com.softserve2020practice.models.Course;
+import com.softserve2020practice.dto.CourseResponseDto;
 import com.softserve2020practice.services.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,31 +12,32 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/course")
+@RequestMapping("/api/courses")
 public class CourseController {
 
     private final CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourses() {
-        return new ResponseEntity<>(courseService.getAllCourses(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<CourseResponseDto> getAllCourses() {
+        return courseService.getAllCourses();
     }
 
     @PostMapping
-    public ResponseEntity createCourse(@Valid @RequestBody CourseCreateDto courseCreateDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createCourse(@Valid @RequestBody CourseCreateDto courseCreateDto) {
         courseService.addCourse(courseCreateDto);
-        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "{id}")
-    public ResponseEntity updateCourse(@Valid @RequestBody CourseUpdateDto courseUpdateDto) {
-        courseService.updateCourse(courseUpdateDto);
-        return new ResponseEntity(HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public void updateCourse(@Valid @RequestBody CourseResponseDto courseResponseDto) {
+        courseService.updateCourse(courseResponseDto);
     }
 
     @DeleteMapping(value = "{id}")
-    public ResponseEntity deleteCourse(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
-        return new ResponseEntity(HttpStatus.OK);
     }
 }
