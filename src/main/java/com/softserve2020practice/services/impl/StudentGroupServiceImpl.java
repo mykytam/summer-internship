@@ -1,13 +1,15 @@
 package com.softserve2020practice.services.impl;
 
-import com.softserve2020practice.converters.StudentGroupRequestDtoToStudentGroup;
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
 import com.softserve2020practice.exceptions.CourseNotFoundException;
 import com.softserve2020practice.exceptions.StudentGroupNotFoundException;
+import com.softserve2020practice.models.Account;
 import com.softserve2020practice.models.Course;
 import com.softserve2020practice.models.Student;
 import com.softserve2020practice.models.StudentGroup;
+import com.softserve2020practice.models.enums.Role;
+import com.softserve2020practice.repositories.AccountRepository;
 import com.softserve2020practice.repositories.CourseRepository;
 import com.softserve2020practice.repositories.StudentGroupRepository;
 import com.softserve2020practice.repositories.StudentRepository;
@@ -17,46 +19,52 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class StudentGroupServiceImpl implements StudentGroupService {
 
     private final ConversionService conversionService;
-    private final StudentGroupRequestDtoToStudentGroup studentGroupRequestDtoToStudentGroup;
     private final StudentGroupRepository studentGroupRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public StudentGroupResponseDto createStudentGroup(StudentGroupRequestDto studentGroupRequestDto) {
 
         StudentGroup studentGroup =
-                studentGroupRequestDtoToStudentGroup.convert(studentGroupRequestDto);
+                conversionService.convert(studentGroupRequestDto, StudentGroup.class);
 
         Course course = courseRepository.findById(studentGroupRequestDto.getCourseId())
                 .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
 
         studentGroup.setCourse(course);
 
-        List<Long> studentIds = studentGroupRequestDto.getStudentId();
-        Student student;
-
-        for (Long l : studentIds) {
-            student = studentRepository.findById(l)
-                    .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
-
-            studentGroup.getStudents().add(student);
-        }
+        List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
+        studentGroup.setStudents(allById);
 
         StudentGroup savedStudentGroup = studentGroupRepository.save(studentGroup);
 
-        return conversionService.convert(savedStudentGroup, StudentGroupResponseDto.class);
+        StudentGroupResponseDto responseStudentGroup =
+                conversionService.convert(savedStudentGroup, StudentGroupResponseDto.class);
+
+        responseStudentGroup.setMentors(
+                accountRepository.findAccountsByRole(Role.MENTOR)
+                        .stream()
+                        .map(Account::getFirstName)
+                        .collect(Collectors.toSet()));
+
+        return responseStudentGroup;
     }
 
     @Override
-    public List<StudentGroup> findAllStudentGroups() {
-        return studentGroupRepository.findAll();
+    public List<StudentGroupResponseDto> findAllStudentGroups() {
+        return studentGroupRepository.findAll()
+                .stream()
+                .map(studentGroup -> conversionService.convert(studentGroup, StudentGroupResponseDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -76,15 +84,14 @@ public class StudentGroupServiceImpl implements StudentGroupService {
                 .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
 
         studentGroup.setCourse(course);
+        studentGroup.setName(studentGroupRequestDto.getName());
+        studentGroup.setStartDate(studentGroupRequestDto.getStartDate());
+        studentGroup.setFinishDate(studentGroupRequestDto.getFinishDate());
 
-        List<Long> studentIds = studentGroupRequestDto.getStudentId();
-        Student student;
+        List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
 
-        for (Long l : studentIds) {
-            student = studentRepository.findById(l)
-                    .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
-
-            studentGroup.getStudents().add(student);
+        for (Student l : allById) {
+            studentGroup.getStudents().add(l);
         }
 
         StudentGroup savedStudentGroup =

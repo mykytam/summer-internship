@@ -1,5 +1,6 @@
 package com.softserve2020practice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softserve2020practice.models.enums.Role;
 import lombok.Data;
 
@@ -47,6 +48,7 @@ public class Account {
     @OneToMany(mappedBy = "idAccount")
     private Set<Mentor> mentors;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idAccount")
     private Set<Student> students;
 

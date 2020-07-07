@@ -2,7 +2,6 @@ package com.softserve2020practice.controllers;
 
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
-import com.softserve2020practice.models.StudentGroup;
 import com.softserve2020practice.services.StudentGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class StudentGroupController {
     }
 
     @GetMapping
-    public List<StudentGroup> findStudentGroup() {
+    public List<StudentGroupResponseDto> findStudentGroup() {
         return studentGroupService.findAllStudentGroups();
     }
 
@@ -35,7 +34,7 @@ public class StudentGroupController {
     }
 
     @PutMapping("{id}")
-    public void updateStudentGroup(StudentGroupRequestDto studentGroupRequestDto, @PathVariable Long id) {
+    public void updateStudentGroup(@PathVariable Long id, @Valid StudentGroupRequestDto studentGroupRequestDto) {
         studentGroupService.updateStudentGroup(studentGroupRequestDto, id);
     }
 
