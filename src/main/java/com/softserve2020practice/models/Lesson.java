@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class Lesson {
     private LocalDateTime lessonDate;
 
     @OneToMany(mappedBy = "lesson")
+    @EqualsAndHashCode.Exclude
     private Set<Visit> visits = new HashSet<>();
 
 }

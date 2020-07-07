@@ -2,6 +2,7 @@ package com.softserve2020practice.services.impl;
 
 import com.softserve2020practice.dto.MentorCreateDto;
 import com.softserve2020practice.dto.MentorUpdateDto;
+import com.softserve2020practice.models.Account;
 import com.softserve2020practice.models.Course;
 import com.softserve2020practice.models.Mentor;
 import com.softserve2020practice.models.enums.Role;
@@ -31,16 +32,17 @@ public class MentorServiceImpl implements MentorService {
     public void addMentor(MentorCreateDto mentorDto) {
 
         Mentor mentor = conversionService.convert(mentorDto, Mentor.class);
+        Account account = mentor.getIdAccount();
 
         List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourses());
         for (Course toAdd : coursesFromDto) {
             mentor.addCourse(toAdd);
         }
 
-        mentor.setRole(Role.MENTOR);
-        mentor.setPassword("qwerty");
-        mentor.setSalt("123234545");
-        mentor.setActive(true);
+        account.setRole(Role.MENTOR);
+        account.setPassword("qwerty");
+        account.setSalt("123234545");
+        account.setActive(true);
 
         mentorRepository.save(mentor);
     }
@@ -49,11 +51,17 @@ public class MentorServiceImpl implements MentorService {
     public void updateMentor(Long id, MentorUpdateDto mentorDto) {
 
         Mentor toUpdate = mentorRepository.findById(id).orElseThrow(RuntimeException::new);
+        Account account = toUpdate.getIdAccount();
 
-        toUpdate.setEmail(mentorDto.getEmail());
-        toUpdate.setFirstName(mentorDto.getFirstName());
-        toUpdate.setLastName(mentorDto.getLastName());
-        toUpdate.setPassword(mentorDto.getEmail());
+        List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourses());
+        for (Course toAdd : coursesFromDto) {
+            toUpdate.addCourse(toAdd);
+        }
+
+        account.setEmail(mentorDto.getEmail());
+        account.setFirstName(mentorDto.getFirstName());
+        account.setLastName(mentorDto.getLastName());
+        account.setPassword(mentorDto.getEmail());
 
         mentorRepository.save(toUpdate);
     }
@@ -61,6 +69,8 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public void deleteMentor(Long id) {
         Mentor toDeactivate = mentorRepository.findById(id).orElseThrow(RuntimeException::new);
-        toDeactivate.setActive(false);
+        Account account = toDeactivate.getIdAccount();
+        account.setActive(false);
+        mentorRepository.save(toDeactivate);
     }
 }
