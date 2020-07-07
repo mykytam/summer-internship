@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.softserve2020practice.services.PasswordGenerator.generatePassword;
+import static com.softserve2020practice.services.PasswordGenerator.generateSalt;
+
 @Service
 @RequiredArgsConstructor
 public class MentorServiceImpl implements MentorService {
@@ -40,8 +43,8 @@ public class MentorServiceImpl implements MentorService {
         }
 
         account.setRole(Role.MENTOR);
-        account.setPassword("qwerty");
-        account.setSalt("123234545");
+        account.setPassword(generatePassword());
+        account.setSalt(generateSalt());
         account.setActive(true);
 
         mentorRepository.save(mentor);
