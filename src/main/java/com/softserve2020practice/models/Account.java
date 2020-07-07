@@ -1,5 +1,6 @@
 package com.softserve2020practice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softserve2020practice.converters.RoleConverter;
 import com.softserve2020practice.models.enums.Role;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Data
 @Entity
@@ -49,6 +51,10 @@ public class Account {
     public Boolean getActive() {
         return isActive;
     }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "idAccount")
+    private Set<Student> students;
 
     public void setActive(Boolean active) {
         isActive = active;

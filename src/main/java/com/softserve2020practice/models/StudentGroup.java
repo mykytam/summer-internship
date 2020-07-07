@@ -1,18 +1,27 @@
 package com.softserve2020practice.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
+@Builder
 @Table(name = "student_group")
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentGroup {
 
     @Id
@@ -28,21 +37,22 @@ public class StudentGroup {
     @Column(name = "name")
     private String name;
 
-    @NotEmpty
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    @NotEmpty
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "finish_date")
     private LocalDate finishDate;
 
-    @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "student_of_student_group",
             joinColumns = @JoinColumn(name = "student_group_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students = new HashSet<>();
+    private List<Student> students = new ArrayList<>();
 
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "studentGroup")

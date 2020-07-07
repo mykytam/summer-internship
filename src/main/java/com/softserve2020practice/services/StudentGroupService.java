@@ -9,7 +9,7 @@ public interface StudentGroupService {
 
     StudentGroupResponseDto createStudentGroup(StudentGroupRequestDto studentGroup);
 
-    List<StudentGroupResponseDto> findStudentGroup();
+    List<StudentGroupResponseDto> findAllStudentGroups();
 
     StudentGroupResponseDto findStudentGroupById(Long id);
 
