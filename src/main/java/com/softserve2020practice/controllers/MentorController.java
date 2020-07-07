@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/api/mentors")
@@ -24,12 +25,12 @@ public class MentorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createMentor(@RequestBody MentorCreateDto mentor) {
+    public void createMentor(@RequestBody @Valid MentorCreateDto mentor) {
         mentorService.addMentor(mentor);
     }
 
     @PutMapping("{id}")
-    public void updateMentor(@PathVariable Long id, @RequestBody MentorUpdateDto mentor) {
+    public void updateMentor(@PathVariable Long id, @RequestBody @Valid MentorUpdateDto mentor) {
         mentorService.updateMentor(id, mentor);
     }
 
