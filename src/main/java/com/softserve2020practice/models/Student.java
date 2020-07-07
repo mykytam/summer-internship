@@ -26,6 +26,7 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private List<StudentGroup> groupStudents;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student")
     private List<Visit> studentVisit;
 

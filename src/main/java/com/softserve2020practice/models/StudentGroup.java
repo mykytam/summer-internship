@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -54,6 +55,7 @@ public class StudentGroup {
     )
     private List<Student> students = new ArrayList<>();
 
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "studentGroup")
     private Set<Lesson> lessons;
