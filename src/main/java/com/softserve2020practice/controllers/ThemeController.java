@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/api/theme")
+@RequestMapping("/api/themes")
 @RestController
 @RequiredArgsConstructor
 public class ThemeController {

@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +22,7 @@ public class Theme {
     private String name;
 
     @OneToMany(mappedBy = "theme")
+    @EqualsAndHashCode.Exclude
     private Set<Lesson> lesson;
 
 }
