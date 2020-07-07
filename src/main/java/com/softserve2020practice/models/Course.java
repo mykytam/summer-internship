@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,13 +22,11 @@ public class Course {
     @Column(name = "name")
     private String name;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "course")
     private Set<StudentGroup> studentGroups;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "mentor_of_course",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "mentor_id")
-    )
+    @ManyToMany(mappedBy = "courses")
+    @EqualsAndHashCode.Exclude
     private Set<Mentor> mentors = new HashSet<>();
 }

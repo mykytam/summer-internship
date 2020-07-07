@@ -19,6 +19,6 @@ public enum Role {
     public static class Constants {
         public static final Integer STUDENT_VALUE = 1;
         public static final Integer MENTOR_VALUE = 2;
-        public static final Integer ADMIN_VALUE = 3;
+        public static final Integer ADMIN_VALUE = 4;
     }
 }

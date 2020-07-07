@@ -3,9 +3,10 @@ package com.softserve2020practice.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -55,9 +56,11 @@ public class StudentGroup {
     private List<Student> students = new ArrayList<>();
 
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "studentGroup")
     private Set<Lesson> lessons;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "mentor_of_student_group",
             joinColumns = @JoinColumn(name = "student_group_id"),

@@ -1,4 +1,4 @@
-package com.softserve2020practice.models;
+package com.softserve2020practice.converters;
 
 import com.softserve2020practice.models.enums.Role;
 
