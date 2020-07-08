@@ -1,4 +1,4 @@
-package com.softserve2020practice.services;
+package com.softserve2020practice.services.impl;
 
 import com.google.common.hash.Hashing;
 import org.apache.commons.lang3.RandomStringUtils;
