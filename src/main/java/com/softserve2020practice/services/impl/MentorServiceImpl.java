@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.softserve2020practice.services.impl.PasswordGenerator.*;
+import static com.softserve2020practice.services.PasswordGenerator.*;
 
 @Service
 @RequiredArgsConstructor
