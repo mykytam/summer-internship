@@ -18,7 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.softserve2020practice.services.impl.PasswordGenerator.*;
+import static com.softserve2020practice.services.impl.PasswordGenerator.generatePassword;
+import static com.softserve2020practice.services.impl.PasswordGenerator.generateSalt;
 
 @Service
 @RequiredArgsConstructor
@@ -64,16 +65,26 @@ public class StudentServiceImpl implements StudentService {
         Student toUpdate = studentRepository.findById(id).orElseThrow(RuntimeException::new);
         Account account = toUpdate.getIdAccount();
 
-        List<StudentGroup> coursesFromDto = studentGroupRepository.findAllById(studentDto.getStudentGroupIds());
-        for (StudentGroup toAdd : coursesFromDto) {
-            toUpdate.deleteForUpdate();
-            toUpdate.addStudentToGroup(toAdd);
+        if (studentDto.getStudentGroupIds() != null) {
+            List<StudentGroup> coursesFromDto = studentGroupRepository.findAllById(studentDto.getStudentGroupIds());
+            for (StudentGroup toAdd : coursesFromDto) {
+                toUpdate.deleteForUpdate();
+                toUpdate.addStudentToGroup(toAdd);
+            }
         }
 
-        account.setEmail(studentDto.getEmail());
-        account.setFirstName(studentDto.getFirstName());
-        account.setLastName(studentDto.getLastName());
-        account.setPassword(updatePassword(studentDto.getEmail()));
+        if (studentDto.getEmail() != null) {
+            account.setEmail(studentDto.getEmail());
+        }
+        if (studentDto.getFirstName() != null) {
+            account.setFirstName(studentDto.getFirstName());
+        }
+        if (studentDto.getLastName() != null) {
+            account.setLastName(studentDto.getLastName());
+        }
+        if (studentDto.getEmail() != null) {
+            account.setEmail(studentDto.getEmail());
+        }
 
         studentRepository.save(toUpdate);
     }
