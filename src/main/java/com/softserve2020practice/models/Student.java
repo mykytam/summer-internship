@@ -1,8 +1,8 @@
 package com.softserve2020practice.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "student")
+@SuperBuilder
 @NoArgsConstructor
 public class Student {
 
@@ -22,12 +23,18 @@ public class Student {
     @JoinColumn(name = "account_id")
     private Account idAccount;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "students")
     private List<StudentGroup> groupStudents;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "student")
     private List<Visit> studentVisit;
 
+    public void addStudentToGroup(StudentGroup studentGroup) {
+        groupStudents.add(studentGroup);
+        studentGroup.getStudents().add(this);
+    }
+
+    public void deleteForUpdate() {
+        groupStudents.clear();
+    }
 }
