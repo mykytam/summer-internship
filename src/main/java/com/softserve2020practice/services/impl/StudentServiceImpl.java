@@ -36,8 +36,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentIdResponseDto> getStudentById() {
-        return null;
+    public StudentIdResponseDto getStudentById(Long id) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException());
+
+        return conversionService.convert(student, StudentIdResponseDto.class);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class StudentServiceImpl implements StudentService {
         Student toUpdate = studentRepository.findById(id).orElseThrow(RuntimeException::new);
         Account account = toUpdate.getIdAccount();
 
-        List<StudentGroup> coursesFromDto = studentGroupRepository.findAllById(studentDto.getGroupsId());
+        List<StudentGroup> coursesFromDto = studentGroupRepository.findAllById(studentDto.getStudentGroupIds());
         for (StudentGroup toAdd : coursesFromDto) {
             toUpdate.deleteForUpdate();
             toUpdate.addStudentToGroup(toAdd);

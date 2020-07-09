@@ -11,7 +11,7 @@ public interface StudentService {
 
     List<StudentResponseDto> getAllStudents();
 
-    List<StudentIdResponseDto> getStudentById();
+    StudentIdResponseDto getStudentById(Long id);
 
     Long addStudent(StudentCreateDto studentDto);
 

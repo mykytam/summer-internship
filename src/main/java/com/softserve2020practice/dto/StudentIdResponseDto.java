@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Data
 @Builder
@@ -19,16 +20,5 @@ public class StudentIdResponseDto {
     private String email;
 
     @NotBlank
-    private String groupName;
-
-    @NotBlank
-    private String courseName;
-
-//    lessons - array of objects
-//    theme - string
-//    mentor - object
-//    first_name - string
-//    last_name - string
-//    date - datetime
-
+    private Set<Long> studentGroupIds;
 }
