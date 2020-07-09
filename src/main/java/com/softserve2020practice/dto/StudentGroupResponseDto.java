@@ -1,8 +1,6 @@
 package com.softserve2020practice.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.softserve2020practice.models.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
@@ -21,21 +18,19 @@ import java.util.Set;
 @AllArgsConstructor
 public class StudentGroupResponseDto {
 
+    @NotNull
+    private Long id;
+
     @NotBlank
     private String groupName;
 
-    @NotBlank
-    private Set<String> mentors;
-
     @NotNull
-    private List<Student> students;
+    private List<Long> mentorIds;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate finishDate;
 
 }

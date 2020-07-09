@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("/api/groups")
+@RequestMapping("/api/student_groups")
 @RestController
 @RequiredArgsConstructor
 public class StudentGroupController {

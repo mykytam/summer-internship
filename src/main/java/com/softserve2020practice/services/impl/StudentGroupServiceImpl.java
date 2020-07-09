@@ -4,12 +4,10 @@ import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
 import com.softserve2020practice.exceptions.CourseNotFoundException;
 import com.softserve2020practice.exceptions.StudentGroupNotFoundException;
-import com.softserve2020practice.models.Account;
 import com.softserve2020practice.models.Course;
+import com.softserve2020practice.models.Mentor;
 import com.softserve2020practice.models.Student;
 import com.softserve2020practice.models.StudentGroup;
-import com.softserve2020practice.models.enums.Role;
-import com.softserve2020practice.repositories.AccountRepository;
 import com.softserve2020practice.repositories.CourseRepository;
 import com.softserve2020practice.repositories.StudentGroupRepository;
 import com.softserve2020practice.repositories.StudentRepository;
@@ -29,7 +27,6 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     private final StudentGroupRepository studentGroupRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
-    private final AccountRepository accountRepository;
 
     @Override
     public StudentGroupResponseDto createStudentGroup(StudentGroupRequestDto studentGroupRequestDto) {
@@ -47,16 +44,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
         StudentGroup savedStudentGroup = studentGroupRepository.save(studentGroup);
 
-        StudentGroupResponseDto responseStudentGroup =
-                conversionService.convert(savedStudentGroup, StudentGroupResponseDto.class);
-
-        responseStudentGroup.setMentors(
-                accountRepository.findAccountsByRole(Role.MENTOR)
-                        .stream()
-                        .map(Account::getFirstName)
-                        .collect(Collectors.toSet()));
-
-        return responseStudentGroup;
+        return conversionService.convert(savedStudentGroup, StudentGroupResponseDto.class);
     }
 
     @Override
@@ -72,7 +60,13 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         StudentGroup studentGroup = studentGroupRepository.findById(id)
                 .orElseThrow(() -> new StudentGroupNotFoundException("Student group not found!"));
 
-        return conversionService.convert(studentGroup, StudentGroupResponseDto.class);
+        StudentGroupResponseDto studentGroupResponseDto = new StudentGroupResponseDto();
+        studentGroupResponseDto.setMentorIds(studentGroup.getMentors()
+                .stream()
+                .map(Mentor::getId)
+                .collect(Collectors.toList()));
+
+        return conversionService.convert(studentGroup, studentGroupResponseDto.getClass());
     }
 
     @Override
@@ -89,10 +83,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         studentGroup.setFinishDate(studentGroupRequestDto.getFinishDate());
 
         List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
-
-        for (Student l : allById) {
-            studentGroup.getStudents().add(l);
-        }
+        studentGroup.setStudents(allById);
 
         StudentGroup savedStudentGroup =
                 studentGroupRepository.save(studentGroup);
