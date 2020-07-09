@@ -16,6 +16,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.softserve2020practice.services.impl.PasswordGenerator.*;
 
@@ -29,7 +30,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentResponseDto> getAllStudents() {
-        return null;
+        return studentRepository.findAll().stream()
+                .map(students -> conversionService.convert(students, StudentResponseDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override

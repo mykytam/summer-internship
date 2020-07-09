@@ -19,10 +19,4 @@ public class StudentResponseDto {
     @NotBlank
     private String lastName;
 
-    @NotBlank
-    private String email;
-
-    @NotBlank
-    private String groupName;
-
 }

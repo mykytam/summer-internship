@@ -13,8 +13,6 @@ public class CreateDtoToStudentConverter implements Converter<StudentCreateDto, 
 
         Account build = Account.builder()
                 .email(source.getEmail())
-                .firstName(source.getFirstName())
-                .lastName(source.getLastName())
                 .build();
 
         return Student.builder().idAccount(build)
