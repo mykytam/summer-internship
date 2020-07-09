@@ -1,7 +1,6 @@
 package com.softserve2020practice.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,12 +27,10 @@ public class StudentGroupResponseDto {
     @NotNull
     private List<Long> mentorIds;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate finishDate;
 
 }

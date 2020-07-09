@@ -1,8 +1,8 @@
 package com.softserve2020practice.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,12 +35,12 @@ public class StudentGroup {
     private String name;
 
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "start_date")
     private LocalDate startDate;
 
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "finish_date")
     private LocalDate finishDate;
 
