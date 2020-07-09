@@ -12,10 +12,10 @@ public class StudentGroupToResponseDtoConverter implements Converter<StudentGrou
     public StudentGroupResponseDto convert(StudentGroup studentGroup) {
 
         return StudentGroupResponseDto.builder()
+                .id(studentGroup.getId())
                 .groupName(studentGroup.getName())
                 .startDate(studentGroup.getStartDate())
                 .finishDate(studentGroup.getFinishDate())
-                .students(studentGroup.getStudents())
                 .build();
     }
 }

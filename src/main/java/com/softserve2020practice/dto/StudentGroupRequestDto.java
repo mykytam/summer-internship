@@ -26,12 +26,12 @@ public class StudentGroupRequestDto {
     @NotNull
     private List<Long> studentId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate finishDate;
 
 }
