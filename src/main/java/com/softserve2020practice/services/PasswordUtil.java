@@ -5,24 +5,23 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.nio.charset.StandardCharsets;
 
-public class PasswordGenerator {
+public class PasswordUtil {
 
     private static final String SALT_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-01234567890";
     private static final Integer SALT_LENGTH = 15;
+    private static final Integer PASSWORD_LENGTH = 8;
 
     public static String generateSalt() {
         return RandomStringUtils.random(SALT_LENGTH, SALT_ALPHABET);
     }
 
     public static String generatePassword() {
-        return Hashing.sha256()
-                .hashString(generateSalt(), StandardCharsets.UTF_8)
-                .toString();
+        return RandomStringUtils.randomAlphabetic(PASSWORD_LENGTH);
     }
 
-    public static String updatePassword(String newPass) {
+    public static String hashPassword(String password, String salt) {
         return Hashing.sha256()
-                .hashString(newPass.concat(generateSalt()), StandardCharsets.UTF_8)
+                .hashString(password.concat(salt), StandardCharsets.UTF_8)
                 .toString();
     }
 }
