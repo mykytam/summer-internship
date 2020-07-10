@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.softserve2020practice.services.PasswordUtil.generatePassword;
-import static com.softserve2020practice.services.PasswordUtil.generateSalt;
-import static com.softserve2020practice.services.PasswordUtil.hashPassword;
+import static com.softserve2020practice.services.PasswordUtil.*;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +74,8 @@ public class MentorServiceImpl implements MentorService {
             }
         }
 
+        String salt = generateSalt();
+
         if (mentorDto.getEmail() != null) {
             account.setEmail(mentorDto.getEmail());
         }
@@ -86,7 +86,7 @@ public class MentorServiceImpl implements MentorService {
             account.setLastName(mentorDto.getLastName());
         }
         if (mentorDto.getPassword() != null) {
-            account.setPassword(updatePassword(mentorDto.getEmail()));
+            account.setPassword(hashPassword(mentorDto.getPassword(), salt));
         }
 
         mentorRepository.save(toUpdate);
