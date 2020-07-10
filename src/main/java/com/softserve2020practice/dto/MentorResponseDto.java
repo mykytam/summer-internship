@@ -13,9 +13,6 @@ public class MentorResponseDto {
     @NotNull
     private Long id;
 
-    @NotNull
-    private Long idAccount;
-
     @NotBlank
     private String email;
 
@@ -24,8 +21,5 @@ public class MentorResponseDto {
 
     @NotBlank
     private String lastName;
-
-    @NotBlank
-    private Boolean isActive;
 
 }

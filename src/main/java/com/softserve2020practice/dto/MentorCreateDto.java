@@ -19,6 +19,6 @@ public class MentorCreateDto {
     @NotBlank
     private String lastName;
 
-    private Set<Long> courses;
+    private Set<Long> courseIds;
 
 }
