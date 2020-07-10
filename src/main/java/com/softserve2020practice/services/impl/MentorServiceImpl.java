@@ -11,16 +11,20 @@ import com.softserve2020practice.repositories.CourseRepository;
 import com.softserve2020practice.repositories.MentorRepository;
 import com.softserve2020practice.services.MentorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.softserve2020practice.services.PasswordGenerator.*;
+import static com.softserve2020practice.services.PasswordUtil.generatePassword;
+import static com.softserve2020practice.services.PasswordUtil.generateSalt;
+import static com.softserve2020practice.services.PasswordUtil.hashPassword;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MentorServiceImpl implements MentorService {
 
     private final MentorRepository mentorRepository;
@@ -45,9 +49,14 @@ public class MentorServiceImpl implements MentorService {
             mentor.addCourse(toAdd);
         }
 
+        String password = generatePassword();
+        String salt = generateSalt();
+
+        log.info("Generated password: {}", password); // TODO: don't log password! Send it to email
+
         account.setRole(Role.MENTOR);
-        account.setPassword(generatePassword());
-        account.setSalt(generateSalt());
+        account.setPassword(hashPassword(password, salt));
+        account.setSalt(salt);
         account.setActive(true);
 
         mentorRepository.save(mentor);
@@ -68,7 +77,7 @@ public class MentorServiceImpl implements MentorService {
         account.setEmail(mentorDto.getEmail());
         account.setFirstName(mentorDto.getFirstName());
         account.setLastName(mentorDto.getLastName());
-        account.setPassword(updatePassword(mentorDto.getEmail()));
+        account.setPassword(hashPassword(mentorDto.getPassword(), account.getSalt()));
 
         mentorRepository.save(toUpdate);
     }
