@@ -1,5 +1,6 @@
 package com.softserve2020practice.controllers;
 
+import com.softserve2020practice.security.Access;
 import com.softserve2020practice.services.ThemeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ public class ThemeController {
 
     private final ThemeService themeService;
 
+    @Access.Mentor
     @GetMapping
     public ResponseEntity<List<String>> getAllThemes() {
         return new ResponseEntity<>(themeService.getAllThemes(), HttpStatus.OK);
