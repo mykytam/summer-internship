@@ -44,7 +44,7 @@ public class MentorServiceImpl implements MentorService {
         Mentor mentor = conversionService.convert(mentorDto, Mentor.class);
         Account account = mentor.getIdAccount();
 
-        List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourses());
+        List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourseIds());
         for (Course toAdd : coursesFromDto) {
             mentor.addCourse(toAdd);
         }
@@ -68,16 +68,26 @@ public class MentorServiceImpl implements MentorService {
         Mentor toUpdate = mentorRepository.findById(id).orElseThrow(RuntimeException::new);
         Account account = toUpdate.getIdAccount();
 
-        List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourses());
-        for (Course toAdd : coursesFromDto) {
-            toUpdate.deleteForUpdate();
-            toUpdate.addCourse(toAdd);
+        if (mentorDto.getCourseIds() != null) {
+            List<Course> coursesFromDto = courseRepository.findAllById(mentorDto.getCourseIds());
+            for (Course toAdd : coursesFromDto) {
+                toUpdate.deleteForUpdate();
+                toUpdate.addCourse(toAdd);
+            }
         }
 
-        account.setEmail(mentorDto.getEmail());
-        account.setFirstName(mentorDto.getFirstName());
-        account.setLastName(mentorDto.getLastName());
-        account.setPassword(hashPassword(mentorDto.getPassword(), account.getSalt()));
+        if (mentorDto.getEmail() != null) {
+            account.setEmail(mentorDto.getEmail());
+        }
+        if (mentorDto.getFirstName() != null) {
+            account.setFirstName(mentorDto.getFirstName());
+        }
+        if (mentorDto.getLastName() != null) {
+            account.setLastName(mentorDto.getLastName());
+        }
+        if (mentorDto.getPassword() != null) {
+            account.setPassword(updatePassword(mentorDto.getEmail()));
+        }
 
         mentorRepository.save(toUpdate);
     }

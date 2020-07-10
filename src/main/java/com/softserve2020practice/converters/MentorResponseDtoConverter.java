@@ -16,11 +16,9 @@ public class MentorResponseDtoConverter implements Converter<Mentor, MentorRespo
 
         return MentorResponseDto.builder()
                 .id(source.getId())
-                .idAccount(source.getIdAccount().getId())
                 .firstName(account.getFirstName())
                 .lastName(account.getLastName())
                 .email(account.getEmail())
-                .isActive(account.getIsActive())
                 .build();
 
     }
