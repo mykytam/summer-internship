@@ -4,6 +4,7 @@ import com.softserve2020practice.dto.StudentCreateDto;
 import com.softserve2020practice.dto.StudentIdResponseDto;
 import com.softserve2020practice.dto.StudentResponseDto;
 import com.softserve2020practice.dto.StudentUpdateDto;
+import com.softserve2020practice.security.Access;
 import com.softserve2020practice.services.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,27 +20,32 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    @Access.Mentor
     @GetMapping
     public List<StudentResponseDto> getAllStudents() {
         return studentService.getAllStudents();
     }
 
+    @Access.Mentor
     @GetMapping("{id}")
     public StudentIdResponseDto getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
 
+    @Access.Mentor
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long createStudent(@RequestBody @Valid StudentCreateDto student) {
         return studentService.addStudent(student);
     }
 
+    @Access.Mentor
     @PutMapping("{id}")
     public void updateMentor(@PathVariable Long id, @RequestBody StudentUpdateDto student) {
         studentService.updateStudent(id, student);
     }
 
+    @Access.Mentor
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMentor(@PathVariable Long id) {
