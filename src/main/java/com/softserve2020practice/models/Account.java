@@ -27,11 +27,9 @@ public class Account {
     @Convert(converter = RoleConverter.class)
     private Role role;
 
-    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
