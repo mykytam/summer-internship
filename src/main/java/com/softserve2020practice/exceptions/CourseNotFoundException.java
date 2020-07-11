@@ -1,6 +1,8 @@
 package com.softserve2020practice.exceptions;
 
-public class CourseNotFoundException extends RuntimeException {
+import javax.persistence.EntityNotFoundException;
+
+public class CourseNotFoundException extends EntityNotFoundException {
 
     public CourseNotFoundException(String message) {
         super(message);

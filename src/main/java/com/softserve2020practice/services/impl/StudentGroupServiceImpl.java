@@ -35,7 +35,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
                 conversionService.convert(studentGroupRequestDto, StudentGroup.class);
 
         Course course = courseRepository.findById(studentGroupRequestDto.getCourseId())
-                .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
+                .orElseThrow(() -> new CourseNotFoundException("Course not found!"));
 
         studentGroup.setCourse(course);
 
@@ -75,7 +75,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
                 .orElseThrow(() -> new StudentGroupNotFoundException("Student group not found!"));
 
         Course course = courseRepository.findById(studentGroupRequestDto.getCourseId())
-                .orElseThrow(() -> new CourseNotFoundException("Course group not found!"));
+                .orElseThrow(() -> new CourseNotFoundException("Course not found!"));
 
         studentGroup.setCourse(course);
         studentGroup.setName(studentGroupRequestDto.getName());

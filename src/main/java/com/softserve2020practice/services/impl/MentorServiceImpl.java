@@ -3,6 +3,7 @@ package com.softserve2020practice.services.impl;
 import com.softserve2020practice.dto.MentorCreateDto;
 import com.softserve2020practice.dto.MentorResponseDto;
 import com.softserve2020practice.dto.MentorUpdateDto;
+import com.softserve2020practice.exceptions.MentorNotFoundException;
 import com.softserve2020practice.models.Account;
 import com.softserve2020practice.models.Course;
 import com.softserve2020practice.models.Mentor;
@@ -51,6 +52,7 @@ public class MentorServiceImpl implements MentorService {
         String password = generatePassword();
         String salt = generateSalt();
 
+        log.info("Generated password: {}", password);
         mailSender.sendMessage(account, password);
 
         account.setRole(Role.MENTOR);
@@ -64,7 +66,8 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public void updateMentor(Long id, MentorUpdateDto mentorDto) {
 
-        Mentor toUpdate = mentorRepository.findById(id).orElseThrow(RuntimeException::new);
+        Mentor toUpdate = mentorRepository.findById(id)
+                .orElseThrow(() -> new MentorNotFoundException("Mentor not found!"));
         Account account = toUpdate.getIdAccount();
 
         if (mentorDto.getCourseIds() != null) {
@@ -96,7 +99,8 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public void deleteMentor(Long id) {
 
-        Mentor toDeactivate = mentorRepository.findById(id).orElseThrow(RuntimeException::new);
+        Mentor toDeactivate = mentorRepository.findById(id)
+                .orElseThrow(() -> new MentorNotFoundException("Mentor not found!"));
         Account account = toDeactivate.getIdAccount();
         account.setActive(false);
 
