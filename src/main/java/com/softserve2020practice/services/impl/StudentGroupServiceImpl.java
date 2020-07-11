@@ -77,13 +77,23 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         Course course = courseRepository.findById(studentGroupRequestDto.getCourseId())
                 .orElseThrow(() -> new CourseNotFoundException("Course not found!"));
 
-        studentGroup.setCourse(course);
-        studentGroup.setName(studentGroupRequestDto.getName());
-        studentGroup.setStartDate(studentGroupRequestDto.getStartDate());
-        studentGroup.setFinishDate(studentGroupRequestDto.getFinishDate());
-
         List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
-        studentGroup.setStudents(allById);
+
+        if (course != null) {
+            studentGroup.setCourse(course);
+        }
+        if (studentGroupRequestDto.getName() != null) {
+            studentGroup.setName(studentGroupRequestDto.getName());
+        }
+        if (studentGroupRequestDto.getStartDate() != null) {
+            studentGroup.setStartDate(studentGroupRequestDto.getStartDate());
+        }
+        if (studentGroupRequestDto.getFinishDate() != null) {
+            studentGroup.setFinishDate(studentGroupRequestDto.getFinishDate());
+        }
+        if (!allById.isEmpty()) {
+            studentGroup.setStudents(allById);
+        }
 
         StudentGroup savedStudentGroup =
                 studentGroupRepository.save(studentGroup);
