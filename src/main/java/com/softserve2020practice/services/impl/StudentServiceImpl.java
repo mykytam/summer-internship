@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.softserve2020practice.services.PasswordUtil.*;
+import static com.softserve2020practice.services.impl.PasswordUtil.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentGroupRepository studentGroupRepository;
     private final ConversionService conversionService;
+    private final MailSender mailSender;
 
     @Override
     public List<StudentResponseDto> getAllStudents() {
@@ -53,12 +54,12 @@ public class StudentServiceImpl implements StudentService {
         String password = generatePassword();
         String salt = generateSalt();
 
-        log.info("Generated password: {}", password); // TODO: don't log password! Send it to email
+        mailSender.sendMessage(account, password);
 
         account.setRole(Role.STUDENT);
-        account.setPassword(hashPassword(password, salt));
         account.setSalt(salt);
         account.setActive(true);
+        account.setPassword(hashPassword(password, salt));
 
         studentRepository.save(student);
 

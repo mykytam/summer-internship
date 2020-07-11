@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import static com.softserve2020practice.constants.Headers.AUTH_HEADER;
-import static com.softserve2020practice.services.PasswordUtil.hashPassword;
+import static com.softserve2020practice.services.impl.PasswordUtil.hashPassword;
 
 @Service
 @RequiredArgsConstructor

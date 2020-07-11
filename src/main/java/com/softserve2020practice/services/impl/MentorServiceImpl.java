@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.softserve2020practice.services.PasswordUtil.*;
+import static com.softserve2020practice.services.impl.PasswordUtil.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +28,7 @@ public class MentorServiceImpl implements MentorService {
     private final MentorRepository mentorRepository;
     private final ConversionService conversionService;
     private final CourseRepository courseRepository;
+    private final MailSender mailSender;
 
     @Override
     public List<MentorResponseDto> getAllMentors() {
@@ -50,7 +51,7 @@ public class MentorServiceImpl implements MentorService {
         String password = generatePassword();
         String salt = generateSalt();
 
-        log.info("Generated password: {}", password); // TODO: don't log password! Send it to email
+        mailSender.sendMessage(account, password);
 
         account.setRole(Role.MENTOR);
         account.setPassword(hashPassword(password, salt));
