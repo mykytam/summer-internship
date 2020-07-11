@@ -4,6 +4,7 @@ import com.softserve2020practice.security.auth.AuthenticationTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,6 +15,7 @@ import java.io.IOException;
 
 import static com.softserve2020practice.constants.Headers.AUTH_HEADER;
 
+@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

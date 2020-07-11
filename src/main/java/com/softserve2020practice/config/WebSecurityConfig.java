@@ -1,7 +1,5 @@
 package com.softserve2020practice.config;
 
-import com.softserve2020practice.security.auth.AuthenticationTokenProvider;
-import com.softserve2020practice.security.filter.CustomCorsFilter;
 import com.softserve2020practice.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,13 +14,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthenticationTokenProvider authenticationTokenProvider;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Value("${security.skip-endpoints}")
     private String[] skipEndpoints;
@@ -38,11 +42,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "GET", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("x-token", "Content-Type", "Accept", "Origin", "Access-Control-Expose-Headers", "jwt"));
+        configuration.setExposedHeaders(Arrays.asList("x-token", "jwt"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
                 .csrf().disable()
+                .cors()
+                .and()
 //                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
 
 //                .and()
@@ -56,8 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(authenticationTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
 
 }
