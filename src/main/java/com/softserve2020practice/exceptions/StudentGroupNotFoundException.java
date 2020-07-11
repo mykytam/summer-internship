@@ -1,6 +1,8 @@
 package com.softserve2020practice.exceptions;
 
-public class StudentGroupNotFoundException extends RuntimeException {
+import javax.persistence.EntityNotFoundException;
+
+public class StudentGroupNotFoundException extends EntityNotFoundException {
 
     public StudentGroupNotFoundException(String message) {
         super(message);

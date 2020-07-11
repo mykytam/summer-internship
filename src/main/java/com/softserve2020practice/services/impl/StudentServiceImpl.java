@@ -4,6 +4,7 @@ import com.softserve2020practice.dto.StudentCreateDto;
 import com.softserve2020practice.dto.StudentIdResponseDto;
 import com.softserve2020practice.dto.StudentResponseDto;
 import com.softserve2020practice.dto.StudentUpdateDto;
+import com.softserve2020practice.exceptions.StudentNotFoundException;
 import com.softserve2020practice.models.Account;
 import com.softserve2020practice.models.Student;
 import com.softserve2020practice.models.StudentGroup;
@@ -40,7 +41,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentIdResponseDto getStudentById(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found!"));
 
         return conversionService.convert(student, StudentIdResponseDto.class);
     }
@@ -69,7 +71,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void updateStudent(Long id, StudentUpdateDto studentDto) {
 
-        Student toUpdate = studentRepository.findById(id).orElseThrow(RuntimeException::new);
+        Student toUpdate = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found!"));
         Account account = toUpdate.getIdAccount();
 
         if (studentDto.getStudentGroupIds() != null) {
@@ -99,7 +102,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
 
-        Student toDeactivate = studentRepository.findById(id).orElseThrow(RuntimeException::new);
+        Student toDeactivate = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found!"));
         Account account = toDeactivate.getIdAccount();
         account.setActive(false);
 
