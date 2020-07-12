@@ -4,6 +4,7 @@ import com.softserve2020practice.dto.LoginRequestDto;
 import com.softserve2020practice.dto.LoginResponseDto;
 import com.softserve2020practice.models.Account;
 import com.softserve2020practice.repositories.AccountRepository;
+import com.softserve2020practice.security.token.TokenStore;
 import com.softserve2020practice.services.AuthService;
 import com.softserve2020practice.services.JwtTokenService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final AccountRepository accountRepository;
     private final JwtTokenService jwtTokenService;
+    private final TokenStore tokenStore;
 
     @Override
     public ResponseEntity<LoginResponseDto> authenticate(LoginRequestDto loginRequestDto) {
@@ -34,6 +36,8 @@ public class AuthServiceImpl implements AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, hashPassword(password, account.getSalt())));
 
         String token = jwtTokenService.createToken(email);
+
+        tokenStore.putToken(token);
 
         LoginResponseDto loginResponseDto = new LoginResponseDto(
                 account.getId(),
