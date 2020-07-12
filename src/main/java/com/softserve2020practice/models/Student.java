@@ -1,10 +1,22 @@
 package com.softserve2020practice.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Data
@@ -27,6 +39,7 @@ public class Student {
     private List<StudentGroup> groupStudents;
 
     @OneToMany(mappedBy = "student")
+    @EqualsAndHashCode.Exclude
     private List<Visit> studentVisit;
 
     public void addStudentToGroup(StudentGroup studentGroup) {
