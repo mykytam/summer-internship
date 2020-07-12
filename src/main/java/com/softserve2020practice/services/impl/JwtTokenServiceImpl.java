@@ -7,6 +7,8 @@ import com.softserve2020practice.services.JwtTokenService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class JwtTokenServiceImpl implements JwtTokenService {
 
@@ -15,7 +17,10 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
     @Override
     public String createToken(String subject) {
-        return JWT.create().withSubject(subject).sign(Algorithm.HMAC512(tokenSecret));
+        return JWT.create()
+                .withSubject(subject)
+                .withJWTId(UUID.randomUUID().toString())
+                .sign(Algorithm.HMAC512(tokenSecret));
     }
 
     @Override
