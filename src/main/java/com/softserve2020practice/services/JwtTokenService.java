@@ -6,4 +6,6 @@ public interface JwtTokenService {
 
     String extractSubject(String token);
 
+    String extractToken(String header);
+
 }

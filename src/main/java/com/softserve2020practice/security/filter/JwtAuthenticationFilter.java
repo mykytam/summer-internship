@@ -2,6 +2,7 @@ package com.softserve2020practice.security.filter;
 
 import com.softserve2020practice.security.auth.AuthenticationTokenProvider;
 import com.softserve2020practice.security.token.TokenValidator;
+import com.softserve2020practice.services.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthenticationTokenProvider authenticationTokenProvider;
     private final TokenValidator tokenValidator;
+    private final JwtTokenService jwtTokenService;
 
     @Override
     public void doFilterInternal(
@@ -30,8 +32,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String token = request.getHeader(AUTH_HEADER);
-        if (token != null && tokenValidator.isValid(token)) {
+        String header = request.getHeader(AUTH_HEADER);
+        if (tokenValidator.isValid(header)) {
+            String token = jwtTokenService.extractToken(header);
             Authentication auth = authenticationTokenProvider.getAuthentication(token);
             if (auth != null) {
                 SecurityContextHolder.getContext().setAuthentication(auth);
