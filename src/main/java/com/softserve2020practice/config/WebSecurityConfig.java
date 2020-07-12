@@ -21,6 +21,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static com.softserve2020practice.constants.Headers.AUTH_HEADER;
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
@@ -47,8 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "GET", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("x-token", "Content-Type", "Accept", "Origin", "Access-Control-Expose-Headers", "jwt"));
-        configuration.setExposedHeaders(Arrays.asList("x-token", "jwt"));
+        configuration.setAllowedHeaders(Arrays.asList("x-token", "Content-Type", "Accept", "Origin", "Access-Control-Expose-Headers", AUTH_HEADER));
+        configuration.setExposedHeaders(Arrays.asList("x-token", AUTH_HEADER));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

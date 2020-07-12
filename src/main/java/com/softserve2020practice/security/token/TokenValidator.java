@@ -3,6 +3,8 @@ package com.softserve2020practice.security.token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import static com.softserve2020practice.constants.Headers.AUTH_HEADER_PREFIX;
+
 @Component
 @RequiredArgsConstructor
 public class TokenValidator {
@@ -10,6 +12,9 @@ public class TokenValidator {
     private final TokenStore tokenStore;
 
     public boolean isValid(String token) {
+        if (token == null || token.length() < AUTH_HEADER_PREFIX.length()) {
+            return false;
+        }
         return refreshToken(token);
     }
 
