@@ -4,10 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.softserve2020practice.converters.RoleConverter;
 import com.softserve2020practice.models.enums.Role;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
@@ -48,6 +56,7 @@ public class Account {
 
     @JsonIgnore
     @OneToMany(mappedBy = "idAccount")
+    @EqualsAndHashCode.Exclude
     private Set<Student> students;
 
     public void setActive(Boolean active) {

@@ -1,7 +1,6 @@
 package com.softserve2020practice.models;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +9,9 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "lesson")
 public class Lesson {
 
@@ -18,7 +20,7 @@ public class Lesson {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "mentor_id", nullable = false)
     private Mentor mentor;
 
@@ -33,8 +35,17 @@ public class Lesson {
     @Column(name = "lesson_date")
     private LocalDateTime lessonDate;
 
-    @OneToMany(mappedBy = "lesson")
+    @Builder.Default
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Set<Visit> visits = new HashSet<>();
 
+    public void addVisit(Visit visit) {
+        visits.add(visit);
+        visit.setLesson(this);
+    }
+
+    public void deleteForUpdate() {
+        visits.clear();
+    }
 }
