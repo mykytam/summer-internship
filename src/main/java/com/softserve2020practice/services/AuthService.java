@@ -5,5 +5,8 @@ import com.softserve2020practice.dto.LoginResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
+
     ResponseEntity<LoginResponseDto> authenticate(LoginRequestDto loginRequestDto);
+
+    void logout(String header);
 }
