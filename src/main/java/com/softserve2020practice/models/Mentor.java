@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,8 +13,9 @@ import java.util.Set;
 
 @Data
 @Entity
-@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @Table(name = "mentor")
 public class Mentor {
 
@@ -40,8 +42,8 @@ public class Mentor {
     @ManyToMany(mappedBy = "mentors")
     private Set<StudentGroup> groups = new HashSet<>();
 
-    @OneToMany(mappedBy = "mentor")
     @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "mentor")
     private Set<Lesson> lessons;
 
     public void addCourse(Course course) {
