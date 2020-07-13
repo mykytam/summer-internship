@@ -65,6 +65,10 @@ public class StudentGroupServiceImpl implements StudentGroupService {
                 .stream()
                 .map(Mentor::getId)
                 .collect(Collectors.toList()));
+        studentGroupResponseDto.setStudentIds(studentGroup.getStudents()
+                .stream()
+                .map(Student::getId)
+                .collect(Collectors.toList()));
 
         return conversionService.convert(studentGroup, studentGroupResponseDto.getClass());
     }

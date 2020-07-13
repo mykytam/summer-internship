@@ -27,6 +27,9 @@ public class StudentGroupResponseDto {
     @NotNull
     private List<Long> mentorIds;
 
+    @NotNull
+    private List<Long> studentIds;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
