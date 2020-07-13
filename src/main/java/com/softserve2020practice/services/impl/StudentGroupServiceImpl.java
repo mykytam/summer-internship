@@ -60,13 +60,17 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         StudentGroup studentGroup = studentGroupRepository.findById(id)
                 .orElseThrow(() -> new StudentGroupNotFoundException("Student group not found!"));
 
-        StudentGroupResponseDto studentGroupResponseDto = new StudentGroupResponseDto();
+        StudentGroupResponseDto studentGroupResponseDto = conversionService.convert(studentGroup, StudentGroupResponseDto.class);
         studentGroupResponseDto.setMentorIds(studentGroup.getMentors()
                 .stream()
                 .map(Mentor::getId)
                 .collect(Collectors.toList()));
+        studentGroupResponseDto.setStudentIds(studentGroup.getStudents()
+                .stream()
+                .map(Student::getId)
+                .collect(Collectors.toList()));
 
-        return conversionService.convert(studentGroup, studentGroupResponseDto.getClass());
+        return studentGroupResponseDto;
     }
 
     @Override
