@@ -1,6 +1,7 @@
 package com.softserve2020practice.services.impl;
 
 import com.softserve2020practice.dto.CourseCreateDto;
+import com.softserve2020practice.dto.CourseRequestDto;
 import com.softserve2020practice.dto.CourseResponseDto;
 import com.softserve2020practice.exceptions.AlreadyExistException;
 import com.softserve2020practice.exceptions.CourseNotFoundException;
@@ -41,10 +42,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateCourse(CourseResponseDto courseResponseDto) {
-        Course course = courseRepository.findById(courseResponseDto.getId())
+    public void updateCourse(CourseRequestDto courseRequestDto, Long id) {
+        Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found!"));
-        course.setName(courseResponseDto.getName());
+        course.setName(courseRequestDto.getName());
         courseRepository.save(course);
     }
 
