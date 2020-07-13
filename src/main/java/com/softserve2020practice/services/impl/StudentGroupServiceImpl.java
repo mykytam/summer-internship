@@ -39,8 +39,10 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
         studentGroup.setCourse(course);
 
-        List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
-        studentGroup.setStudents(allById);
+        if (studentGroupRequestDto.getStudentId() != null) {
+            List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
+            studentGroup.setStudents(allById);
+        }
 
         StudentGroup savedStudentGroup = studentGroupRepository.save(studentGroup);
 
