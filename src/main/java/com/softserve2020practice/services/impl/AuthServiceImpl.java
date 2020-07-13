@@ -50,4 +50,9 @@ public class AuthServiceImpl implements AuthService {
         return ResponseEntity.ok().header(AUTH_HEADER, token).body(loginResponseDto);
     }
 
+    @Override
+    public void logout(String header) {
+        tokenStore.removeToken(header);
+    }
+
 }
