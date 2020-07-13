@@ -4,8 +4,10 @@ import com.softserve2020practice.dto.LessonByStudentIdResponseDto;
 import com.softserve2020practice.dto.LessonCreateDto;
 import com.softserve2020practice.dto.LessonResponseDto;
 import com.softserve2020practice.dto.LessonUpdateDto;
+import com.softserve2020practice.exceptions.LessonNotFoundException;
 import com.softserve2020practice.exceptions.StudentGroupNotFoundException;
 import com.softserve2020practice.exceptions.StudentNotFoundException;
+import com.softserve2020practice.exceptions.VisitNotFoundException;
 import com.softserve2020practice.models.*;
 import com.softserve2020practice.repositories.*;
 import com.softserve2020practice.services.LessonService;
@@ -71,7 +73,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public void updateLesson(Long id, LessonUpdateDto lessonUpdateDto) {
 
-        Lesson lesson = lessonRepository.findById(id).orElseThrow(RuntimeException::new);
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException("Lesson not found!"));
         Mentor mentor = mentorRepository.findByIdAccount_Id(userDetailsExtractor.extractJwtUser().getId());
 
         if (lessonUpdateDto.getLessonsVisits() != null) {
@@ -107,7 +109,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonByStudentIdResponseDto> getLessonsByStudentId(Long id) {
-        List<Visit> visits = studentRepository.findById(id).orElseThrow(RuntimeException::new).getStudentVisit();
+        List<Visit> visits = studentRepository.findById(id).orElseThrow(() -> new VisitNotFoundException("Visit not found!")).getStudentVisit();
         return visits.stream()
                 .map(lesson -> conversionService.convert(lesson, LessonByStudentIdResponseDto.class))
                 .collect(Collectors.toList());
