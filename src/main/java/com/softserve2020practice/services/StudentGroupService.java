@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StudentGroupService {
 
-    StudentGroupResponseDto createStudentGroup(StudentGroupRequestDto studentGroup);
+    void createStudentGroup(StudentGroupRequestDto studentGroup);
 
     List<StudentGroupResponseDto> findAllStudentGroups();
 
