@@ -43,7 +43,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public void addLesson(LessonCreateDto lessonCreateDto) {
         Theme theme = themeRepository.findByName(lessonCreateDto.getThemeName());
-        Set<Visit> visits = lessonCreateDto.getLessonsVisits().stream()
+        Set<Visit> visits = lessonCreateDto.getLessonVisits().stream()
                 .map(visitDtoCreate -> {
                     Visit visit = conversionService.convert(visitDtoCreate, Visit.class);
                     Student student = studentRepository.findById(visitDtoCreate.getStudentId())
@@ -76,8 +76,8 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException("Lesson not found!"));
         Mentor mentor = mentorRepository.findByIdAccount_Id(userDetailsExtractor.extractJwtUser().getId());
 
-        if (lessonUpdateDto.getLessonsVisits() != null) {
-            Set<Visit> visits = lessonUpdateDto.getLessonsVisits().stream()
+        if (lessonUpdateDto.getLessonVisits() != null) {
+            Set<Visit> visits = lessonUpdateDto.getLessonVisits().stream()
                     .map(visitDtoCreate -> {
                         Visit visit = conversionService.convert(visitDtoCreate, Visit.class);
                         Student student = studentRepository.findById(visitDtoCreate.getStudentId())
