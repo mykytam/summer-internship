@@ -29,7 +29,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     private final CourseRepository courseRepository;
 
     @Override
-    public StudentGroupResponseDto createStudentGroup(StudentGroupRequestDto studentGroupRequestDto) {
+    public void createStudentGroup(StudentGroupRequestDto studentGroupRequestDto) {
 
         StudentGroup studentGroup =
                 conversionService.convert(studentGroupRequestDto, StudentGroup.class);
@@ -39,12 +39,13 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
         studentGroup.setCourse(course);
 
-        List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
-        studentGroup.setStudents(allById);
+        if (studentGroupRequestDto.getStudentId() != null) {
+            List<Student> allById = studentRepository.findAllById(studentGroupRequestDto.getStudentId());
+            studentGroup.setStudents(allById);
+        }
 
-        StudentGroup savedStudentGroup = studentGroupRepository.save(studentGroup);
+        studentGroupRepository.save(studentGroup);
 
-        return conversionService.convert(savedStudentGroup, StudentGroupResponseDto.class);
     }
 
     @Override

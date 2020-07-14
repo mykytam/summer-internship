@@ -22,7 +22,6 @@ public class StudentGroupRequestDto {
     @NotNull
     private Long courseId;
 
-    @NotNull
     private List<Long> studentId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
