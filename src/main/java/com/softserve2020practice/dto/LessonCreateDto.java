@@ -20,6 +20,6 @@ public class LessonCreateDto {
 
     private LocalDateTime lessonDate;
 
-    private List<VisitDto> lessonsVisits;
+    private List<VisitDto> lessonVisits;
 
 }

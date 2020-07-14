@@ -14,6 +14,6 @@ public class LessonUpdateDto {
 
     private LocalDateTime lessonDate;
 
-    private List<VisitDto> lessonsVisits;
+    private List<VisitDto> lessonVisits;
 
 }
