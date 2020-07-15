@@ -18,6 +18,12 @@ public class CustomRestExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
+    @ExceptionHandler(IncludesImportantVariableException.class)
+    public ResponseEntity<ApiError> includesImportantVariableException(IncludesImportantVariableException ex) {
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN, ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> methodArgumentNotValidHandler(MethodArgumentNotValidException ex) {
         ValidationError validationError = new ValidationError(ex.getBindingResult().getFieldErrors());

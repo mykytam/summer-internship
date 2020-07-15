@@ -3,6 +3,7 @@ package com.softserve2020practice.services.impl;
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
 import com.softserve2020practice.exceptions.CourseNotFoundException;
+import com.softserve2020practice.exceptions.StudentGroupIncludesStudentException;
 import com.softserve2020practice.exceptions.StudentGroupNotFoundException;
 import com.softserve2020practice.models.Course;
 import com.softserve2020practice.models.Mentor;
@@ -108,6 +109,13 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Override
     public void deleteStudentGroup(Long id) {
-        studentGroupRepository.deleteById(id);
+        StudentGroup studentGroup = studentGroupRepository.findById(id)
+                .orElseThrow(() -> new StudentGroupNotFoundException("Student group not found"));
+
+        if (studentGroup.getStudents().isEmpty()) {
+            studentGroupRepository.deleteById(id);
+        } else {
+            throw new StudentGroupIncludesStudentException("Student group includes student(s)!");
+        }
     }
 }
