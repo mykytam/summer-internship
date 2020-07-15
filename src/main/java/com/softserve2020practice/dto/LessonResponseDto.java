@@ -1,5 +1,6 @@
 package com.softserve2020practice.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class LessonResponseDto {
     @NotBlank
     private String themeName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lessonDate;
 
 }

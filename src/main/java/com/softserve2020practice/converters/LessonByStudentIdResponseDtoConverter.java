@@ -21,7 +21,7 @@ public class LessonByStudentIdResponseDtoConverter implements Converter<Visit, L
                 .mark(source.getStudentMark())
                 .comment(source.getComment())
                 .studentGroupId(source.getStudent().getId())
-                .localDate(source.getLesson().getLessonDate())
+                .lessonDate(source.getLesson().getLessonDate())
                 .build();
     }
 }

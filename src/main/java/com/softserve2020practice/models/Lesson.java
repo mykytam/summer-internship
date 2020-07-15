@@ -1,6 +1,7 @@
 package com.softserve2020practice.models;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class Lesson {
     private Theme theme;
 
     @Column(name = "lesson_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lessonDate;
 
     @Builder.Default
