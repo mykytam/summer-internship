@@ -22,7 +22,7 @@ public class StudentGroupResponseDto {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String groupName;
 
     @NotNull
     private List<Long> mentorIds;

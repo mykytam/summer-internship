@@ -42,7 +42,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public void addLesson(LessonCreateDto lessonCreateDto) {
-        Theme theme = themeRepository.findByName(lessonCreateDto.getThemeName());
+
         Set<Visit> visits = lessonCreateDto.getLessonVisits().stream()
                 .map(visitDtoCreate -> {
                     Visit visit = conversionService.convert(visitDtoCreate, Visit.class);
@@ -59,11 +59,21 @@ public class LessonServiceImpl implements LessonService {
         Mentor mentor = mentorRepository.findByIdAccount_Id(userDetailsExtractor.extractJwtUser().getId());
 
         Lesson lesson = Lesson.builder()
-                .theme(theme)
                 .studentGroup(studentGroup)
                 .lessonDate(lessonCreateDto.getLessonDate())
                 .mentor(mentor)
                 .build();
+
+        Theme themeFromDb = themeRepository.findByName(lessonCreateDto.getThemeName());
+        Theme toSave = new Theme();
+        toSave.setName(lessonCreateDto.getThemeName());
+
+        if (themeFromDb != null) {
+            lesson.setTheme(themeFromDb);
+        } else {
+            themeRepository.save(toSave);
+            lesson.setTheme(toSave);
+        }
 
         visits.forEach(lesson::addVisit);
 

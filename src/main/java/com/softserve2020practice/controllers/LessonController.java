@@ -1,10 +1,10 @@
 package com.softserve2020practice.controllers;
 
+import com.softserve2020practice.annotations.Access;
 import com.softserve2020practice.dto.LessonByStudentIdResponseDto;
 import com.softserve2020practice.dto.LessonCreateDto;
 import com.softserve2020practice.dto.LessonResponseDto;
 import com.softserve2020practice.dto.LessonUpdateDto;
-import com.softserve2020practice.security.Access;
 import com.softserve2020practice.services.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
