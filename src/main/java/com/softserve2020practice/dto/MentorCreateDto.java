@@ -1,5 +1,6 @@
 package com.softserve2020practice.dto;
 
+import com.softserve2020practice.annotations.UniqueEmail;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Builder
 public class MentorCreateDto {
 
+    @UniqueEmail
     @NotBlank
     @Pattern(
             regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$",

@@ -1,8 +1,8 @@
 package com.softserve2020practice.controllers;
 
+import com.softserve2020practice.annotations.Access;
 import com.softserve2020practice.dto.StudentGroupRequestDto;
 import com.softserve2020practice.dto.StudentGroupResponseDto;
-import com.softserve2020practice.security.Access;
 import com.softserve2020practice.services.StudentGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

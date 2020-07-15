@@ -1,8 +1,8 @@
 package com.softserve2020practice.security.filter;
 
 import com.softserve2020practice.security.auth.AuthenticationTokenProvider;
-import com.softserve2020practice.security.token.TokenValidator;
 import com.softserve2020practice.services.JwtTokenService;
+import com.softserve2020practice.validation.TokenValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

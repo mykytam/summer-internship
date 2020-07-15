@@ -42,8 +42,8 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public void addLesson(LessonCreateDto lessonCreateDto) {
-        Theme theme = themeRepository.findByName(lessonCreateDto.getThemeName());
-        Set<Visit> visits = lessonCreateDto.getLessonsVisits().stream()
+
+        Set<Visit> visits = lessonCreateDto.getLessonVisits().stream()
                 .map(visitDtoCreate -> {
                     Visit visit = conversionService.convert(visitDtoCreate, Visit.class);
                     Student student = studentRepository.findById(visitDtoCreate.getStudentId())
@@ -59,11 +59,21 @@ public class LessonServiceImpl implements LessonService {
         Mentor mentor = mentorRepository.findByIdAccount_Id(userDetailsExtractor.extractJwtUser().getId());
 
         Lesson lesson = Lesson.builder()
-                .theme(theme)
                 .studentGroup(studentGroup)
                 .lessonDate(lessonCreateDto.getLessonDate())
                 .mentor(mentor)
                 .build();
+
+        Theme themeFromDb = themeRepository.findByName(lessonCreateDto.getThemeName());
+        Theme toSave = new Theme();
+        toSave.setName(lessonCreateDto.getThemeName());
+
+        if (themeFromDb != null) {
+            lesson.setTheme(themeFromDb);
+        } else {
+            themeRepository.save(toSave);
+            lesson.setTheme(toSave);
+        }
 
         visits.forEach(lesson::addVisit);
 
@@ -76,8 +86,8 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException("Lesson not found!"));
         Mentor mentor = mentorRepository.findByIdAccount_Id(userDetailsExtractor.extractJwtUser().getId());
 
-        if (lessonUpdateDto.getLessonsVisits() != null) {
-            Set<Visit> visits = lessonUpdateDto.getLessonsVisits().stream()
+        if (lessonUpdateDto.getLessonVisits() != null) {
+            Set<Visit> visits = lessonUpdateDto.getLessonVisits().stream()
                     .map(visitDtoCreate -> {
                         Visit visit = conversionService.convert(visitDtoCreate, Visit.class);
                         Student student = studentRepository.findById(visitDtoCreate.getStudentId())
