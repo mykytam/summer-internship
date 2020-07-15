@@ -1,4 +1,4 @@
-package com.softserve2020practice.security;
+package com.softserve2020practice.annotations;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 

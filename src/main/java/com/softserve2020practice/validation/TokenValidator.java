@@ -1,5 +1,6 @@
-package com.softserve2020practice.security.token;
+package com.softserve2020practice.validation;
 
+import com.softserve2020practice.security.token.TokenStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
